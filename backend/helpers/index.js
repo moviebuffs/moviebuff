@@ -11,4 +11,4 @@ axios.get('https://api.themoviedb.org/3/search/movie', {
     console.log(response);
 }).catch((err) => {
     console.error(err);
-})
+})           
