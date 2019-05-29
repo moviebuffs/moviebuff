@@ -34,4 +34,4 @@ const Movie = sequelize.define('Movie', {
 const User_Movie_List = sequelize.define('User_Movie_List', {
    user_id: Sequelize.INTEGER,
    movie_id: Sequelize.INTEGER 
-})
+})         
