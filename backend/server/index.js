@@ -1,25 +1,19 @@
 //Load HTTP module
+require('dotenv').config();
+const db = require('../database/index');
+const path = require('path');
 const http = require("http");
-const hostname = '127.0.0.1';
-const port = 3000;
-const express = require('express')
+const hostname = process.env.SERVER_HOST;
+const port = process.env.SERVER_PORT;
+const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 
-//Create HTTP server and listen on port 3000 for requests
-const server = http.createServer((req, res) => {
+app.use(express.static(path.join(__dirname, "../../frontend/public/index.html")));
+//app.use(bodyParser.json());
 
-    //Set the response HTTP header with HTTP status and Content type
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World\n');
-});
-
-app.get('/movie', (req, res) => {
-    
-})
 
 //listen for request on port 3000, and as a callback function have the port listened on logged
-server.listen(port, hostname, () => {
+app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
