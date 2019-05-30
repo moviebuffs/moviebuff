@@ -34,8 +34,8 @@ const Movie = sequelize.define('Movie', {
 })
 
 const UserMovieList = sequelize.define('User_Movie_List', {
-   userId: Sequelize.INTEGER,
-   movieId: Sequelize.INTEGER 
-})         
+    userId: Sequelize.INTEGER,
+    movieId: Sequelize.INTEGER
+})
 
 module.exports = { User, Movie, UserMovieList };
