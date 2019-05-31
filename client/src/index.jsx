@@ -11,6 +11,12 @@ import MovieDescript from './Pages/MovieDescript.jsx';
 import UserAccount from './Pages/UserAccount.jsx';
 import SearchResults from './Pages/SearchResults.jsx';
 
+//firebase imports
+import firebase, { auth, provider } from '../../firebaseConfig.js';
+
+
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,11 +25,41 @@ class App extends React.Component {
       user: null,
       users: [],
     };
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
 
+  }
+  
+  login() {
+    auth.signInWithPopup(provider).then((result) => {
+      this.setState({
+        user: result.user
+      })
+    })
+  }
+  
+  logout() {
+    auth.signOut().then((result) => {
+      this.setState({
+        user: null
+      })
+    })
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({user})
+      }
+    })
   }
 
 
   render() {
+    let authButton = this.state.user ?
+      <button onClick={this.logout}>Log Out</button> :
+      <button onClick={this.login}>Log In</button>
+    
     const App = () => (
       <div>
         <Switch>
@@ -35,9 +71,12 @@ class App extends React.Component {
       </div>
     )
     return (
-      <Switch>
-        <App />
-      </Switch>
+      <div>
+        {authButton}
+      </div>
+      // <Switch>
+      //   <App />
+      // </Switch>
     );
     // return (
     //   <div className="App">
@@ -49,6 +88,8 @@ class App extends React.Component {
     // );
   }
 }
+
+
 
 ReactDOM.render((
   <BrowserRouter>
