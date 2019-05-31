@@ -15,20 +15,6 @@ class Main extends React.Component {
     this.getNowPlayingMovies = this.getNowPlayingMovies.bind(this);
   }
 
-  // handleSearch(pokemonName) {
-  //   console.log(`${pokemonName} was searched`)
-  //   return axios.post('/pokemon', {
-  //     pokemonName: pokemonName,
-  //   })
-  //     .then((response) => {
-  //       console.log(response);
-  //       this.setState({ entry: response.data });
-  //       console.log('state', this.state.entry);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
   getNowPlayingMovies() {
     console.log('getNowPlayingMovies');
     return axios.get('/now-playing')
