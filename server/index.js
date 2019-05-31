@@ -16,11 +16,11 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(bodyParser.json());
 
 app.get('/now-playing', (req, res) => {
-  nowPlaying().then((playingMovies) => {
-    console.log('HIT', playingMovies);
-    const { results } = playingMovies.data;
+  nowPlaying().then((movies) => {
+    const { results } = movies.data;
     const currentMovies = results.map((movie) => {
       return {
+        movieId: movie.id,
         originalTitle: movie.original_title,
         overview: movie.overview,
         posterPath: movie.poster_path,
@@ -28,9 +28,7 @@ app.get('/now-playing', (req, res) => {
         voteCount: movie.vote_count,
       }
     });
-    movies = { data: currentMovies };
-    console.log('CURRENTMOVIES', movies);
-    res.json(movies);
+    res.json({ data: currentMovies });
   })
     .catch((error) => {
       console.error(error);
@@ -57,19 +55,36 @@ app.listen(port, hostname, () => {
 //GET request for movie and movie review simultaneously
 app.get('/movie/:movieName', (req, res) => {
   helpers.getMovie(req.params.movieName)
-    .then((movie) => {
-      console.log(movie[0].id);
-      //loop through movie results array to pull out the movie id for each movie
-      //with the movie id, we can make another request for that movies reviews using movie/{movie_id}/reviews
-      let movieId;
-      movie.forEach((movie) => {
-        movieId = movie.id;
-        // will most likely just save the reviews directly into database
-        helpers.getReviews(movieId).then((reviews) => res.send(reviews));
-      })
-    });
-
-})
+    .then((searchResults) => {
+      console.log(searchResults);
+      const searchedMovies = searchResults.map((movie) => {
+        return {
+          movieId: movie.id,
+          originalTitle: movie.original_title,
+          overview: movie.overview,
+          posterPath: movie.poster_path,
+          voteAvg: movie.vote_average,
+          voteCount: movie.vote_count,
+        }
+      });
+      res.json({ data: searchedMovies });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    })
+});
+// .then((movie) => {
+//   console.log(movie[0].id);
+//   //loop through movie results array to pull out the movie id for each movie
+//   //with the movie id, we can make another request for that movies reviews using movie/{movie_id}/reviews
+//   let movieId;
+//   movie.forEach((movie) => {
+//     movieId = movie.id;
+//     // will most likely just save the reviews directly into database
+//     helpers.getReviews(movieId).then((reviews) => res.send(reviews));
+//   })
+// })
 
 app.get('/popular', (req, res) => {
   helpers.getPopular()
