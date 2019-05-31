@@ -10,11 +10,12 @@ class Main extends React.Component {
     super(props);
     this.state = {
       movies: [],
+      search: '',
     };
 
     this.getNowPlayingMovies = this.getNowPlayingMovies.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.getSearchedMovies = this.getSearchedMovies.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   getNowPlayingMovies() {
@@ -27,23 +28,32 @@ class Main extends React.Component {
       });
   };
 
+  getSearchedMovies(movie) {
+    return axios.get(`/movie/${movie}`)
+      .then((movies) => {
+        console.log(movies);
+        return movies;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   componentDidMount(e) {
     this.getNowPlayingMovies()
       .then((response) => {
-        this.setState({movies: response.data.data});
+        // console.log(response);
+        this.setState({ movies: response.data.data });
       })
       .catch((error) => {
         console.error(error);
       })
   };
 
-  handleSubmit(event) {
-    console.log('click', this.state.value);
+  handleSearch(input) {
+    this.setState({ search: input })
+    this.getSearchedMovies(input);
     event.preventDefault();
-  }
-
-  handleClick(event) {
-    console.log('click');
   }
 
   // Homepage
@@ -51,8 +61,8 @@ class Main extends React.Component {
     return (
       <div>
         <Login />
-        <Search handleSubmit={this.handleSubmit} />
-        <MovieList movies={this.state.movies}/>
+        <Search handleSearch={this.handleSearch} />
+        <MovieList movies={this.state.movies} />
         {/* <Carousel movies={this.state.movies} /> */}
       </div>
     );
