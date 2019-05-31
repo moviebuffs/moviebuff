@@ -11,6 +11,19 @@ import MovieDescript from './Pages/MovieDescript.jsx';
 import UserAccount from './Pages/UserAccount.jsx';
 import SearchResults from './Pages/SearchResults.jsx';
 
+//firebase imports
+
+import withFirebaseAuth from 'react-with-firebase-auth'
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './firebaseConfig';
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseAppAuth = firebaseApp.auth();
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -49,6 +62,11 @@ class App extends React.Component {
     // );
   }
 }
+
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth,
+})(App);
 
 ReactDOM.render((
   <BrowserRouter>
