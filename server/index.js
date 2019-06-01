@@ -56,7 +56,6 @@ app.listen(port, hostname, () => {
 app.get('/movie/:movieName', (req, res) => {
   helpers.getMovie(req.params.movieName)
     .then((searchResults) => {
-      console.log(searchResults);
       const searchedMovies = searchResults.map((movie) => {
         return {
           movieId: movie.id,
@@ -77,11 +76,16 @@ app.get('/movie/:movieName', (req, res) => {
 
 // handle get request for movie reviews
 app.post('/reviews', (req, res) => {
-  console.log("REQUEST", req.body, req.params);
   helpers.getReviews(req.body.movieId)
     .then((reviews) => {
-      console.log(reviews);
-      res.send({reviews: reviews});
+      const shortReviews = reviews.map((review) => {
+        return {
+          author: review.author,
+          content: review.content.substring(0, 500) + '...',
+          url: review.url,
+        }
+      });
+      res.send({reviews: shortReviews});
     })
     .catch((error) => {
       console.error(error);
