@@ -7,35 +7,36 @@ const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.USERNAME,
 });
 
 sequelize.authenticate()
-  .then(() => {
-    console.log('Connect motherfucker');
-  })
-  .catch((err) => {
-    console.log('You fucked up g');
-  });
+  .then(() => console.log('Connected to the database'))
+  .catch(err => console.error('Could not connect to the database', err));
 
 sequelize.sync({
   force: true,
 })
 
-
-const User = sequelize.define('User', {
+const User = sequelize.define('user', { // model schema for user -- lowercase for psql. 
   username: Sequelize.STRING,
   email: Sequelize.STRING,
-  password: Sequelize.STRING,
 });
 
-const Movie = sequelize.define('Movie', {
+const Movie = sequelize.define('movie', { // model schema for movie -- lowercase for psql. 
   movieTitle: Sequelize.STRING,
-  movieDescription: Sequelize.STRING,
+  movieDescription: Sequelize.STRING(2000),
   posterPath: Sequelize.STRING,
   voteCount: Sequelize.INTEGER,
-  voteAverage: Sequelize.INTEGER
+  voteAverage: Sequelize.FLOAT
 })
 
-const UserMovieList = sequelize.define('User_Movie_List', {
-  userId: Sequelize.INTEGER,
-  movieId: Sequelize.INTEGER
+// Postgres will automatically make movie and user plural values in db tables
+
+Movie.belongsToMany(User, { // defines relationship
+  through: 'user_movie_list', // stores reference on join table
+  foreignKey: 'movieId' // links correct id
 })
 
-module.exports = { User, Movie, UserMovieList };
+User.belongsToMany(Movie, { // inverse relationship should also be defined
+  through: 'user_movie_list',
+  foreignKey: 'userId'
+})
+
+module.exports = { User, Movie };
