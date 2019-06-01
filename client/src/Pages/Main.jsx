@@ -21,7 +21,7 @@ class Main extends React.Component {
   getNowPlayingMovies() {
     return axios.get('/now-playing')
       .then((movies) => {
-        return movies;
+        return movies.data.data;
       })
       .catch((error) => {
         console.error(error);
@@ -32,7 +32,7 @@ class Main extends React.Component {
     return axios.get(`/movie/${movie}`)
       .then((movies) => {
         console.log(movies);
-        return movies;
+        return movies.data.data;
       })
       .catch((error) => {
         console.error(error);
@@ -42,8 +42,7 @@ class Main extends React.Component {
   componentDidMount(e) {
     this.getNowPlayingMovies()
       .then((response) => {
-        // console.log(response);
-        this.setState({ movies: response.data.data });
+        this.setState({ movies: response });
       })
       .catch((error) => {
         console.error(error);
@@ -52,7 +51,13 @@ class Main extends React.Component {
 
   handleSearch(input) {
     this.setState({ search: input })
-    this.getSearchedMovies(input);
+    this.getSearchedMovies(input)
+      .then((movies) => {
+        this.setState({movies: movies})
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     event.preventDefault();
   }
 
