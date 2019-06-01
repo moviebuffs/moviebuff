@@ -21,7 +21,7 @@ class MovieList extends React.Component {
     return (
       <div>
         {movies.map((movie) => {
-          return <Movie movie={movie} />
+          return <Movie movie={movie} handleClick={this.props.handleClick}/>
         })}
       </div>
     );

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Login from '../Components/Login.jsx';
 import Search from '../Components/Search.jsx';
 import MovieList from '../Components/MovieList.jsx';
+import MovieDescript from './MovieDescript.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -11,11 +12,14 @@ class Main extends React.Component {
     this.state = {
       movies: [],
       search: '',
+      movie: null,
+      // movieSelected: true,
     };
 
     this.getNowPlayingMovies = this.getNowPlayingMovies.bind(this);
     this.getSearchedMovies = this.getSearchedMovies.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   getNowPlayingMovies() {
@@ -61,16 +65,53 @@ class Main extends React.Component {
     event.preventDefault();
   }
 
+  handleClick(clickedMovieId) {
+    this.state.movies.forEach((movie) => {
+      if (movie.movieId === clickedMovieId) {
+        this.setState({movie: movie});
+      }
+    });
+    console.log('CLICK', this.state);
+  }
+
   // Homepage
   render() {
-    return (
-      <div>
-        <Login />
-        <Search handleSearch={this.handleSearch} />
-        <MovieList movies={this.state.movies} />
-        {/* <Carousel movies={this.state.movies} /> */}
+    if (this.state.movie) {
+      return (
+        <div>
+          {/* <Login />
+          <Search handleSearch={this.handleSearch} /> */}
+          <MovieDescript movie={this.state.movie} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Login />
+          <Search handleSearch={this.handleSearch} />
+          <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+          {/* <MovieDescript movie={this.state.movie} /> */}
+          {/* <Carousel movies={this.state.movies} /> */}
       </div>
-    );
+      );
+    }
+    // let view;
+    // if (this.state.movie) {
+    //   view = <MovieDescript movie={this.state.movie} />
+    //   console.log('view', view);
+    // } else {
+    //   view = <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+    //   console.log('view', view);
+    // }
+    // return (
+    //   <div>
+    //     <Login />
+    //     <Search handleSearch={this.handleSearch} />
+    //     {/* <MovieList movies={this.state.movies} handleClick={this.handleClick} /> */}
+    //     {/* <MovieDescript movie={this.state.movie} /> */}
+    //     {/* <Carousel movies={this.state.movies} /> */}
+    //   </div>
+    // );
   }
 }
 

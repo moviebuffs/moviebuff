@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Route, Switch } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
+// react router imports
+// import { Route, Switch } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 
 // import '../App.css';
 
@@ -65,24 +66,22 @@ class App extends React.Component {
     <h5>Signed in using {this.state.user.email}</h5> : 
     null
 
-    const App = () => (
-      <div>
-        <Switch>
-          <Route exact path='/' component={Main} />
-          <Route path='/movie' component={MovieDescript} />
-          <Route path='/account' component={UserAccount} />
-          <Route path='/results' component={SearchResults} />
-        </Switch>
-      </div>
-    )
+    // const App = () => (
+    //   <div>
+    //     <Switch>
+    //       <Route exact path='/' component={Main} />
+    //       <Route path='/movie' component={MovieDescript} />
+    //       <Route path='/account' component={UserAccount} />
+    //       <Route path='/results' component={SearchResults} />
+    //     </Switch>
+    //   </div>
+    // )
     return (
       // <div>
       //   {userInfo}
       //   {authButton}
       // </div>
-      <Switch>
-        <App />
-      </Switch>
+      <Main />
     );
     // return (
     //   <div className="App">
@@ -97,7 +96,4 @@ class App extends React.Component {
 
 
 
-ReactDOM.render((
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>), document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));

@@ -4,8 +4,17 @@ import React from 'react';
 class Movie extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
 
+    };
+
+    this.handleSelect = this.handleSelect.bind(this);
+
+  }
+
+  handleSelect() {
+    console.log(this.props.movie);
+    this.props.handleClick(this.props.movie.movieId);
   }
 
   render() {
@@ -13,11 +22,13 @@ class Movie extends React.Component {
     return (
       <div>
         <div>
-          <h3>{movie.originalTitle}</h3>
+          <h3 onClick={this.props.handleClick} >{movie.originalTitle}</h3>
           <p>{movie.overview}</p>
         </div>
         <div>
-          <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt=""/>
+          <a href="#" onClick={this.handleSelect}>
+            <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
+          </a>
           <h4>{movie.voteAvg}</h4>
         </div>
         {/* information about movie from api data */}
