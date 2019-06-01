@@ -11,11 +11,6 @@ class MovieList extends React.Component {
 
   }
 
-  // componentDidMount() {
-  //   var elem = document.querySelector('.carousel');
-  //   M.Carousel.init(elem, { duration: 200 });
-  // }
-
   render() {
     const { movies } = this.props;
     return (

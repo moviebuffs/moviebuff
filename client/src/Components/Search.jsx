@@ -10,15 +10,18 @@ class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // handle state change when something is typed in input field
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
 
+  // handler for passing input value up to main component when search button is clicked
   handleSubmit(event) {
     this.props.handleSearch(this.state.value);
     event.preventDefault();
   }
 
+  // search input field and button
   render() {
     return (
       <form onSubmit={this.handleSubmit}>

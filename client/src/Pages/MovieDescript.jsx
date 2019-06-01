@@ -13,17 +13,7 @@ class MovieDescript extends React.Component {
     this.getReviews = this.getReviews.bind(this);
   }
 
-  // getSearchedMovies(movie) {
-  //   return axios.get(`/movie/${movie}`)
-  //     .then((movies) => {
-  //       console.log(movies);
-  //       return movies.data.data;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
-
+  // handle getting reviews for a movie when it is clicked
   getReviews(movie) {
     console.log('getReviews', movie)
     console.log({movieId: movie.movieId});
@@ -39,6 +29,7 @@ class MovieDescript extends React.Component {
       });
   }
 
+  // when this component is rendered, get reviews
   componentDidMount(e) {
     this.getReviews(this.props.movie)
       .then((reviews) => {
@@ -50,17 +41,7 @@ class MovieDescript extends React.Component {
       });
   }
 
-  // handleReviews(movie) {
-  //   this.getReviews(movie)
-  //     .then((reviews) => {
-  //       this.setState({ reviews: reviews })
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  //   event.preventDefault();
-  // }
-
+  // show detailed info about movie and reviews about movie
   render() {
     const { movie } = this.props;
     return (
