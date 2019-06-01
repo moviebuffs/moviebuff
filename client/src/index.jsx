@@ -25,34 +25,34 @@ class App extends React.Component {
       user: null,
       users: [],
     };
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
+    // this.login = this.login.bind(this);
+    // this.logout = this.logout.bind(this);
 
   }
   
-  login() {
-    auth.signInWithPopup(provider).then((result) => {
-      this.setState({
-        user: result.user
-      })
-    })
-  }
+  // login() {
+  //   auth.signInWithPopup(provider).then((result) => {
+  //     this.setState({
+  //       user: result.user
+  //     })
+  //   })
+  // }
   
-  logout() {
-    auth.signOut().then((result) => {
-      this.setState({
-        user: null
-      })
-    })
-  }
+  // logout() {
+  //   auth.signOut().then((result) => {
+  //     this.setState({
+  //       user: null
+  //     })
+  //   })
+  // }
 
-  componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({user})
-      }
-    })
-  }
+  // componentDidMount() {
+  //   auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       this.setState({user})
+  //     }
+  //   })
+  // }
 
 
   render() {
@@ -76,13 +76,13 @@ class App extends React.Component {
       </div>
     )
     return (
-      <div>
-        {userInfo}
-        {authButton}
-      </div>
-      // <Switch>
-      //   <App />
-      // </Switch>
+      // <div>
+      //   {userInfo}
+      //   {authButton}
+      // </div>
+      <Switch>
+        <App />
+      </Switch>
     );
     // return (
     //   <div className="App">
