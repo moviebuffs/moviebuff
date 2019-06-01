@@ -79,15 +79,15 @@ class Main extends React.Component {
     if (this.state.movie) {
       return (
         <div>
-          {/* <Login />
-          <Search handleSearch={this.handleSearch} /> */}
+          {/* <Login /> */}
+          <Search handleSearch={this.handleSearch} />
           <MovieDescript movie={this.state.movie} />
         </div>
       );
     } else {
       return (
         <div>
-          <Login />
+          {/* <Login /> */}
           <Search handleSearch={this.handleSearch} />
           <MovieList movies={this.state.movies} handleClick={this.handleClick} />
           {/* <MovieDescript movie={this.state.movie} /> */}
@@ -95,23 +95,6 @@ class Main extends React.Component {
       </div>
       );
     }
-    // let view;
-    // if (this.state.movie) {
-    //   view = <MovieDescript movie={this.state.movie} />
-    //   console.log('view', view);
-    // } else {
-    //   view = <MovieList movies={this.state.movies} handleClick={this.handleClick} />
-    //   console.log('view', view);
-    // }
-    // return (
-    //   <div>
-    //     <Login />
-    //     <Search handleSearch={this.handleSearch} />
-    //     {/* <MovieList movies={this.state.movies} handleClick={this.handleClick} /> */}
-    //     {/* <MovieDescript movie={this.state.movie} /> */}
-    //     {/* <Carousel movies={this.state.movies} /> */}
-    //   </div>
-    // );
   }
 }
 
