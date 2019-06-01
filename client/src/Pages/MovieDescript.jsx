@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx'
 
@@ -7,7 +8,56 @@ class MovieDescript extends React.Component {
     super(props);
     this.state = {};
 
+    this.getReviews = this.getReviews.bind(this);
   }
+
+  // getSearchedMovies(movie) {
+  //   return axios.get(`/movie/${movie}`)
+  //     .then((movies) => {
+  //       console.log(movies);
+  //       return movies.data.data;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }
+
+  getReviews(movie) {
+    console.log('getReviews', movie)
+    console.log({movieId: movie.movieId});
+    return axios.post(`/reviews`, {
+      movieId: movie.movieId,
+    })
+      .then((reviews) => {
+        console.log('REVIEWS', reviews);
+        return reviews.data.reviews;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  componentDidMount(e) {
+    this.getReviews(this.props.movie)
+      .then((reviews) => {
+        console.log('REVIEWS', reviews)
+        this.setState({ reviews: reviews })
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  // handleReviews(movie) {
+  //   this.getReviews(movie)
+  //     .then((reviews) => {
+  //       this.setState({ reviews: reviews })
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //   event.preventDefault();
+  // }
 
   render() {
     const { movie } = this.props;
@@ -16,11 +66,14 @@ class MovieDescript extends React.Component {
         {/* information about movie; buttons for upvote/downvote; button for add to list; tweets; theatre links */}
         <div>
           <h3>{movie.originalTitle}</h3>
+          <h4>{movie.voteAvg}</h4>
           <p>{movie.overview}</p>
         </div>
         <div>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
-          <h4>{movie.voteAvg}</h4>
+        </div>
+        <div>
+          <ReviewList reviews={this.state.reviews} />
         </div>
       </div>
     );

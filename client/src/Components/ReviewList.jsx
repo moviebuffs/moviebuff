@@ -5,13 +5,16 @@ import Review from './Review.jsx'
 class ReviewList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      reviews: [],
+    };
 
   }
 
   render() {
     return (
       <div>
+
         {/* map tweets here */}
       </div>
     );

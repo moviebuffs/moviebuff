@@ -71,21 +71,21 @@ app.get('/movie/:movieName', (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     })
 });
 
 // handle get request for movie reviews
-app.get('/reviews', (req, res) => {
+app.post('/reviews', (req, res) => {
   console.log("REQUEST", req.body, req.params);
   helpers.getReviews(req.body.movieId)
     .then((reviews) => {
       console.log(reviews);
-      res.send(reviews);
+      res.send({reviews: reviews});
     })
     .catch((error) => {
       console.error(error);
-      res.send(404);
+      res.sendStatus(404);
     });
 });
 
