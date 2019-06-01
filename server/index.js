@@ -8,7 +8,7 @@ const port = process.env.SERVER_PORT;
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const { 
+const { // pull all backend helper functions for server and database interaction
   getMovie,
   getPopular,
   getReviews,
@@ -26,55 +26,69 @@ app.use(bodyParser.json());
 app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}/`));
 
 app.post('/movies', (req, res) => { // More logic needed
-  const movie = req.body;
+  const { title, overview, poster_path, vote_count, vote_average } = req.body;
   storeMovie( // store movie data in database relative to schema
-    movie.title,
-    movie.overview,
-    movie.poster_path,
-    movie.vote_count,
-    movie.vote_average
+    title,
+    overview,
+    poster_path,
+    vote_count,
+    vote_average
   )
+  .then(() => res.send(201))
+  .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+  })
 });
 
 app.post('/users', (req, res) => {
-  storeUser(); // more logic needed
+  const { username, email } = req.body; // pull username and email from body sent from frontend
+  storeUser(username, email) // store user info into database
+    .then(() => res.send(201))
+    .catch(error => {
+      console.error(error);
+      res.sendStatus(500);
+    })
 })
 
 app.put('/votes', (req, res) => {
   changeVotes(); // more logic needed
   grabUserVotes();
+  // respond with changed object
 })
 
 app.get('/now-playing', (req, res) => {
-  nowPlaying().then(movies => {
-    const { results } = movies.data; // pull results from movies.data with destructuring
-    const currentMovies = results.map(movie => { // return an array of objects for each movie
-      console.log(movie);
-      return {
-        movieId: movie.id,
-        originalTitle: movie.title,
-        overview: movie.overview,
-        posterPath: movie.poster_path,
-        voteAvg: movie.vote_average,
-        voteCount: movie.vote_count,
-      }
-    });
-    res.json({ data: currentMovies }); // respond with object movie data
-  })
+  nowPlaying()
+    .then(movies => {
+      const { results } = movies.data; // pull results from movies.data
+      const currentMovies = results.map(movie => { // return an array of objects for each movie
+        console.log(movie);
+        return {
+          movieId: movie.id,
+          title: movie.title,
+          overview: movie.overview,
+          posterPath: movie.poster_path,
+          voteAvg: movie.vote_average,
+          voteCount: movie.vote_count,
+        }
+      });
+      res.json({ data: currentMovies }); // respond with object movie data
+    })
     .catch(error => {
       console.error(error);
       res.sendStatus(500);
     })
 });
 
-//GET request for movie and movie review simultaneously
-app.get('/movie/:movieName', (req, res) => {
-  getMovie(req.params.movieName)
+// testing needed
+app.get('/movie/:movieName', (req, res) => { // route that points to a movie name search
+  const { movieName } = req.params; // pull movieName from body sent from front end
+  getMovie(movieName)
     .then(searchResults => {
       const searchedMovies = searchResults.map(movie => {
         return {
           movieId: movie.id,
-          originalTitle: movie.title,
+          title: movie.title,
           overview: movie.overview,
           posterPath: movie.poster_path,
           voteAvg: movie.vote_average,
@@ -86,32 +100,33 @@ app.get('/movie/:movieName', (req, res) => {
     })
     .catch(error => {
       console.error(error);
-      res.sendStatus(404);
+      res.sendStatus(500);
     })
 });
 
-// handle get request for movie reviews
-app.post('/reviews', (req, res) => {
-  getReviews(req.body.movieId)
+app.post('/reviews', (req, res) => { // Testing needed -- edge case and destructuring
+  const { movieId } = req.body; // pull movieId from body sent from front end
+  getReviews(movieId)
     .then(reviews => {
-      const shortReviews = reviews.map(review => {
-        return {
+      // test edgecase of no reviews in front end
+      const shortReviews = reviews.map(review => { // format reviews into array of objects containing shortened reviews
+        return { 
           author: review.author,
           content: review.content.substring(0, 500) + '...',
           url: review.url,
         }
       });
-      res.send({reviews: shortReviews});
+      res.send({reviews: shortReviews}); // respond with reviews array stored on an object
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
-      res.sendStatus(404);
+      res.sendStatus(500);
     });
 });
 
-app.get('/popular', (req, res) => {
+app.get('/popular', (req, res) => { 
   getPopular()
-    .then(popularMovies => res.send(popularMovies));
+    .then(popularMovies => res.send(popularMovies)); // send back popular movies
 })
 
 //route for user account page
