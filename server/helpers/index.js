@@ -15,7 +15,7 @@ const storeMovie = (movieTitle, movieDescription, posterPath, voteCount, voteAve
     voteAverage,
   });
 
-const grabUserVotes = movieId => 
+const grabUserVotes = movieId => // grab current userVotes value for a given movie by its id
   Movie.findAll({
     attributes: ['userVotes'],
     where: {
@@ -23,7 +23,7 @@ const grabUserVotes = movieId =>
     },
   });
 
-const changeVotes = (movieId, sym) => 
+const changeVotes = (movieId, sym) => // change userVotes in database
   sym === '+' ? Movie.update({ userVotes: Movie.userVotes + 1 }, { where: { id: movieId } }) 
     : Movie.update({ userVotes: Movie.userVotes - 1 }, { where: { id: movieId } })
 
@@ -51,8 +51,6 @@ const getMovie = movieName => // grabs searched movies
   })
   .then(response => response.data.results)
   .catch(err => console.error(err))
-
-
 
 const getPopular = () => // grabs popular movies
   axios.get('https://api.themoviedb.org/3/movie/popular', {
