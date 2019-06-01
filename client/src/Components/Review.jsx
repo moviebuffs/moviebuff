@@ -9,12 +9,16 @@ class Review extends React.Component {
   }
 
   render() {
+    const { review } = this.props;
     return (
       <div>
-        {/* api tweet info here */}
+        <h3>{review.author}</h3>
+        <p>{review.content}</p>
+        <a href={review.url}><p>read full review</p></a>
       </div>
     );
   }
+
 }
 
 export default Review;

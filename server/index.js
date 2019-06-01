@@ -50,19 +50,7 @@ app.listen(port, hostname, () => console.log(`Server running at http://${hostnam
 //GET request for movie and movie review simultaneously
 app.get('/movie/:movieName', (req, res) => {
   helpers.getMovie(req.params.movieName)
-    .then(searchResults => {
-      // Stores searched movies into the database
-      // with the movie id, we can make another request for that movies reviews using movie/{movie_id}/reviews
-      searchResults.forEach(movie => { //loop through movie results array to pull out the movie id for each movie
-        helpers.storeMovie( // store movie data in database relative to schema
-          movie.title,
-          movie.overview,
-          movie.poster_path,
-          movie.vote_count,
-          movie.vote_average
-        )
-      });
-
+    .then((searchResults) => {
       const searchedMovies = searchResults.map((movie) => {
         return {
           movieId: movie.id,
@@ -78,20 +66,28 @@ app.get('/movie/:movieName', (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     })
 });
-// .then((movie) => {
-//   console.log(movie[0].id);
-//   //loop through movie results array to pull out the movie id for each movie
-//   //with the movie id, we can make another request for that movies reviews using movie/{movie_id}/reviews
-//   let movieId;
-//   movie.forEach((movie) => {
-//     movieId = movie.id;
-//     // will most likely just save the reviews directly into database
-//     helpers.getReviews(movieId).then((reviews) => res.send(reviews));
-//   })
-// })
+
+// handle get request for movie reviews
+app.post('/reviews', (req, res) => {
+  helpers.getReviews(req.body.movieId)
+    .then((reviews) => {
+      const shortReviews = reviews.map((review) => {
+        return {
+          author: review.author,
+          content: review.content.substring(0, 500) + '...',
+          url: review.url,
+        }
+      });
+      res.send({reviews: shortReviews});
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(404);
+    });
+});
 
 app.get('/popular', (req, res) => {
   helpers.getPopular()
