@@ -2,19 +2,34 @@ const axios = require('axios');
 const { API_KEY } = require('../../config')
 const { User, Movie } = require('../../database');
 
+// Database Helpers
+
 const storeUser = (username, email) => User.create({ username, email }); // create user with params to match schema
 
-const storeMovie = (movieTitle, movieDescription, posterPath, voteCount, voteAverage, userVotes = 0) =>
+const storeMovie = (movieTitle, movieDescription, posterPath, voteCount, voteAverage) =>
   Movie.create({ // creates database entry with params as keys to match schema
     movieTitle,
     movieDescription,
     posterPath,
     voteCount,
     voteAverage,
-    userVotes,
   });
 
-const nowPlaying = () => 
+const grabUserVotes = movieId => 
+  Movie.findAll({
+    attributes: ['userVotes'],
+    where: {
+      id: movieId,
+    },
+  });
+
+const incrVotes = (movieId, sym) => 
+  sym === '+' ? Movie.update({ userVotes: Movie.userVotes + 1 }, { where: { id: movieId } }) 
+    : Movie.update({ userVotes: Movie.userVotes - 1 }, { where: { id: movieId } })
+
+// API Helpers
+
+const nowPlaying = () => // grabs movies that are currently playing
   axios.get('https://api.themoviedb.org/3/movie/now_playing', {
     params: {
       api_key: API_KEY,
@@ -27,7 +42,7 @@ const nowPlaying = () =>
   .catch(err => console.error(err))
 
 
-const getMovie = movieName => 
+const getMovie = movieName => // grabs searched movies
   axios.get('https://api.themoviedb.org/3/search/movie', {
     params: {
       api_key: API_KEY,
@@ -39,7 +54,7 @@ const getMovie = movieName =>
 
 
 
-const getPopular = () => 
+const getPopular = () => // grabs popular movies
   axios.get('https://api.themoviedb.org/3/movie/popular', {
     params: {
       api_key: API_KEY,
@@ -51,7 +66,7 @@ const getPopular = () =>
   .then(response => response.data.results)
 
 
-const getReviews = movieId => 
+const getReviews = movieId => // grabs movie reviews
   axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews`, {
     params: {
       api_key: API_KEY,
@@ -62,9 +77,22 @@ const getReviews = movieId =>
   .then(response => response.data.results)
 
 
-module.exports.getMovie = getMovie;
-module.exports.getPopular = getPopular;
-module.exports.getReviews = getReviews;
-module.exports.nowPlaying = nowPlaying;
-module.exports.storeMovie = storeMovie;
-module.exports.storeUser = storeUser;
+// module.exports.getMovie = getMovie;
+// module.exports.getPopular = getPopular;
+// module.exports.getReviews = getReviews;
+// module.exports.nowPlaying = nowPlaying;
+// module.exports.storeMovie = storeMovie;
+// module.exports.storeUser = storeUser;
+// module.exports.grabUserVotes = grabUserVotes;
+// module.exports.incrVotes = incrVotes;
+
+module.exports = {
+  getMovie,
+  getPopular,
+  getReviews,
+  nowPlaying,
+  storeMovie,
+  storeUser,
+  grabUserVotes,
+  incrVotes
+}
