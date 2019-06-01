@@ -11,7 +11,7 @@ class ReviewList extends React.Component {
 
   render() {
     const { reviews } = this.props;
-    console.log(reviews);
+
     return (
       <div>
         {reviews.map((review) => {
