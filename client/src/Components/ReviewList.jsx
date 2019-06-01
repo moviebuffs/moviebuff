@@ -5,17 +5,18 @@ import Review from './Review.jsx'
 class ReviewList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      reviews: [],
-    };
+    this.state = {};
 
   }
 
   render() {
+    const { reviews } = this.props;
+    console.log(reviews);
     return (
       <div>
-
-        {/* map tweets here */}
+        {reviews.map((review) => {
+          return <Review review={review} />
+        })}
       </div>
     );
   }

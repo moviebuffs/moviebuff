@@ -6,7 +6,9 @@ import ReviewList from '../Components/ReviewList.jsx'
 class MovieDescript extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      reviews: [],
+    };
 
     this.getReviews = this.getReviews.bind(this);
   }
