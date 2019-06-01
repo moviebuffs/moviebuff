@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+
 // import '../../App.css';
 import Login from '../Components/Login.jsx';
 import Search from '../Components/Search.jsx';
@@ -13,7 +14,6 @@ class Main extends React.Component {
       movies: [],
       search: '',
       movie: null,
-      // movieSelected: true,
     };
 
     this.getNowPlayingMovies = this.getNowPlayingMovies.bind(this);
@@ -22,6 +22,7 @@ class Main extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // handle request for movies playing in theatres now
   getNowPlayingMovies() {
     return axios.get('/now-playing')
       .then((movies) => {
@@ -32,6 +33,7 @@ class Main extends React.Component {
       });
   };
 
+  // handle request for searching for a movie
   getSearchedMovies(movie) {
     return axios.get(`/movie/${movie}`)
       .then((movies) => {
@@ -43,6 +45,7 @@ class Main extends React.Component {
       });
   }
 
+  // when user visits page, show now playing movies and set them to state
   componentDidMount(e) {
     this.getNowPlayingMovies()
       .then((response) => {
@@ -53,6 +56,7 @@ class Main extends React.Component {
       })
   };
 
+  // when user searches for a movie, get movies matching search and set them to state
   handleSearch(input) {
     this.setState({ search: input })
     this.getSearchedMovies(input)
@@ -65,17 +69,18 @@ class Main extends React.Component {
     event.preventDefault();
   }
 
+  // when a movie is clicked, set the state for movie to the object of the clicked movie
   handleClick(clickedMovieId) {
     this.state.movies.forEach((movie) => {
       if (movie.movieId === clickedMovieId) {
         this.setState({movie: movie});
       }
     });
-    console.log('CLICK', this.state);
   }
 
-  // Homepage
+  
   render() {
+    // show a movie's details when it is clicked
     if (this.state.movie) {
       return (
         <div>
@@ -84,6 +89,7 @@ class Main extends React.Component {
           <MovieDescript movie={this.state.movie} />
         </div>
       );
+    // show a movielist when page is visited and a movie is searched
     } else {
       return (
         <div>

@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 // import { BrowserRouter } from 'react-router-dom';
 
 // import '../App.css';
-
 import Main from './Pages/Main.jsx';
 import MovieDescript from './Pages/MovieDescript.jsx';
 import UserAccount from './Pages/UserAccount.jsx';
@@ -14,9 +13,6 @@ import SearchResults from './Pages/SearchResults.jsx';
 
 //firebase imports
 import firebase, { auth, provider } from '../../firebaseConfig.js';
-
-
-
 
 class App extends React.Component {
   constructor(props) {
@@ -56,7 +52,8 @@ class App extends React.Component {
     })
   }
 
-
+  // when a user is logged out, show login button
+  // when a user is logged in, show logout button and homepage
   render() {
     let authButton = this.state.user ?
       <button onClick={this.logout}>Log Out</button> :
@@ -83,7 +80,6 @@ class App extends React.Component {
     );
   }
 }
-
 
 // const App = () => (
 //   <div>
