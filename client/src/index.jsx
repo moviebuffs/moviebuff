@@ -14,9 +14,6 @@ import SearchResults from './Pages/SearchResults.jsx';
 //firebase imports
 import firebase, { auth, provider } from '../../firebaseConfig.js';
 
-
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -61,9 +58,7 @@ class App extends React.Component {
       <button onClick={this.login}>Log In</button>
     
 
-    let userInfo = this.state.user ?
-    <h5>Signed in using {this.state.user.email}</h5> : 
-    null
+    let userInfo = this.state.user ? <h5>Signed in using {this.state.user.email}</h5> : null
 
     const App = () => (
       <div>
