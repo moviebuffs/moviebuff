@@ -16,33 +16,28 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(bodyParser.json());
 
 app.get('/now-playing', (req, res) => {
-  nowPlaying().then((movies) => {
-    const { results } = movies.data;
-    const currentMovies = results.map((movie) => {
+  nowPlaying().then(movies => {
+    const { results } = movies.data; // pull results from movies.data with destructuring
+    const currentMovies = results.map(movie => { // return an array of objects for each movie
       return {
         movieId: movie.id,
-        originalTitle: movie.original_title,
+        originalTitle: movie.title,
         overview: movie.overview,
         posterPath: movie.poster_path,
         voteAvg: movie.vote_average,
         voteCount: movie.vote_count,
       }
     });
-    res.json({ data: currentMovies });
+    res.json({ data: currentMovies }); // respond with object movie data
   })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
       res.sendStatus(500);
     })
 });
 
 //listen for request on port 3000, and as a callback function have the port listened on logged
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
-
-
-
+app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}/`));
 
 //route for homepage
 // app.get('/', (req, res) => {
@@ -59,13 +54,14 @@ app.get('/movie/:movieName', (req, res) => {
       const searchedMovies = searchResults.map((movie) => {
         return {
           movieId: movie.id,
-          originalTitle: movie.original_title,
+          originalTitle: movie.title,
           overview: movie.overview,
           posterPath: movie.poster_path,
           voteAvg: movie.vote_average,
           voteCount: movie.vote_count,
         }
       });
+
       res.json({ data: searchedMovies });
     })
     .catch((error) => {
@@ -95,7 +91,7 @@ app.post('/reviews', (req, res) => {
 
 app.get('/popular', (req, res) => {
   helpers.getPopular()
-    .then((popularMovies) => res.send(popularMovies));
+    .then(popularMovies => res.send(popularMovies));
 })
 
 //route for user account page
