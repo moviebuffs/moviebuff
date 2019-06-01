@@ -16,33 +16,28 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(bodyParser.json());
 
 app.get('/now-playing', (req, res) => {
-  nowPlaying().then((movies) => {
-    const { results } = movies.data;
-    const currentMovies = results.map((movie) => {
+  nowPlaying().then(movies => {
+    const { results } = movies.data; // pull results from movies.data with destructuring
+    const currentMovies = results.map(movie => { // return an array of objects for each movie
       return {
         movieId: movie.id,
-        originalTitle: movie.original_title,
+        originalTitle: movie.title,
         overview: movie.overview,
         posterPath: movie.poster_path,
         voteAvg: movie.vote_average,
         voteCount: movie.vote_count,
       }
     });
-    res.json({ data: currentMovies });
+    res.json({ data: currentMovies }); // respond with object movie data
   })
-    .catch((error) => {
+    .catch(error => {
       console.error(error);
       res.sendStatus(500);
     })
 });
 
 //listen for request on port 3000, and as a callback function have the port listened on logged
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
-
-
-
+app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}/`));
 
 //route for homepage
 // app.get('/', (req, res) => {
@@ -55,18 +50,30 @@ app.listen(port, hostname, () => {
 //GET request for movie and movie review simultaneously
 app.get('/movie/:movieName', (req, res) => {
   helpers.getMovie(req.params.movieName)
-    .then((searchResults) => {
-      console.log(searchResults);
+    .then(searchResults => {
+      // Stores searched movies into the database
+      // with the movie id, we can make another request for that movies reviews using movie/{movie_id}/reviews
+      searchResults.forEach(movie => { //loop through movie results array to pull out the movie id for each movie
+        helpers.storeMovie( // store movie data in database relative to schema
+          movie.title,
+          movie.overview,
+          movie.poster_path,
+          movie.vote_count,
+          movie.vote_average
+        )
+      });
+
       const searchedMovies = searchResults.map((movie) => {
         return {
           movieId: movie.id,
-          originalTitle: movie.original_title,
+          originalTitle: movie.title,
           overview: movie.overview,
           posterPath: movie.poster_path,
           voteAvg: movie.vote_average,
           voteCount: movie.vote_count,
         }
       });
+
       res.json({ data: searchedMovies });
     })
     .catch((error) => {
@@ -88,7 +95,7 @@ app.get('/movie/:movieName', (req, res) => {
 
 app.get('/popular', (req, res) => {
   helpers.getPopular()
-    .then((popularMovies) => res.send(popularMovies));
+    .then(popularMovies => res.send(popularMovies));
 })
 
 //route for user account page
