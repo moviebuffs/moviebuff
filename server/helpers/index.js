@@ -23,7 +23,7 @@ const grabUserVotes = movieId =>
     },
   });
 
-const incrVotes = (movieId, sym) => 
+const changeVotes = (movieId, sym) => 
   sym === '+' ? Movie.update({ userVotes: Movie.userVotes + 1 }, { where: { id: movieId } }) 
     : Movie.update({ userVotes: Movie.userVotes - 1 }, { where: { id: movieId } })
 
@@ -84,7 +84,7 @@ const getReviews = movieId => // grabs movie reviews
 // module.exports.storeMovie = storeMovie;
 // module.exports.storeUser = storeUser;
 // module.exports.grabUserVotes = grabUserVotes;
-// module.exports.incrVotes = incrVotes;
+// module.exports.changeVotes = changeVotes;
 
 module.exports = {
   getMovie,
@@ -94,5 +94,5 @@ module.exports = {
   storeMovie,
   storeUser,
   grabUserVotes,
-  incrVotes
+  changeVotes
 }
