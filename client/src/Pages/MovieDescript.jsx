@@ -29,6 +29,8 @@ class MovieDescript extends React.Component {
     // this.getVotes = this.getVotes.bind(this);
     // this.handleVote = this.handleVote.bind(this);
     // this.addToList = this.addToList.bind(this);
+    this.upvote = this.upvote.bind(this);
+    this.downvote = this.downvote.bind(this);
   }
 
   // handle getting reviews for a movie when it is clicked
@@ -48,25 +50,47 @@ class MovieDescript extends React.Component {
   componentDidMount(e) {
     this.getReviews(this.props.movie)
       .then((reviews) => {
-        this.setState({ reviews: reviews })
+        this.setState({
+           reviews: reviews,
+           userVotes: this.props.userVotes,
+        })
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  // handleVote(vote) {
-  //   return axios.post('/vote', {
-  //     movie: this.props.movie,
-  //     vote: vote,
-  //   })
-  //     .then((vote) => {
-  //       return vote;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
+  handleVote(vote) {
+    const { movie } = this.props;
+    console.log(movie);
+    return axios.put('/votes', {
+      title: movie.title,
+      overview: movie.overview,
+      poster_path: movie.posterPath,
+      vote_count: movie.voteCount,
+      vote_average: movie.voteAvg,
+      numFlag: vote,
+    })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          userVotes: res.data[0].userVotes,
+        })
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  upvote() {
+    console.log('upvote');
+    this.handleVote(1);
+  }
+
+  downvote() {
+    console.log('downvote');
+    this.handleVote(-1);
+  }
 
   // addToList() {
   //   return axios.post('/watchlist', {
@@ -96,9 +120,9 @@ class MovieDescript extends React.Component {
           <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
         </div>
         <div>
-          <Button variant="contained" color="primary">Upvote</Button>
-          <h5>{this.props.userVotes}</h5>
-          <Button variant="contained" color="primary">Downvote</Button>
+          <Button onClick={this.upvote} variant="contained" color="primary">Upvote</Button>
+          <h5>{this.state.userVotes}</h5>
+          <Button onClick={this.downvote} variant="contained" color="primary">Downvote</Button>
           <Button variant="contained" color="primary">Add to Watchlist</Button>
         </div>
         <div>
