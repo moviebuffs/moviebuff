@@ -34,14 +34,19 @@ const Movie = sequelize.define('movie', { // model schema for movie -- lowercase
 
 // Postgres will automatically make movie and user plural values in db tables
 
-Movie.belongsToMany(User, { // defines relationship
-  through: 'user_movie_list', // stores reference on join table
-  foreignKey: 'movieId' // links correct id
-})
+const UsersMovies = sequelize.define('users_movies', {});
+UsersMovies.belongsTo(User);
+UsersMovies.belongsTo(Movie);
 
-User.belongsToMany(Movie, { // inverse relationship should also be defined
-  through: 'user_movie_list',
-  foreignKey: 'userId'
-})
 
-module.exports = { User, Movie };
+// Movie.belongsToMany(User, { // defines relationship
+//   through: 'user_movie_list', // stores reference on join table
+//   foreignKey: 'movieId' // links correct id
+// })
+
+// User.belongsToMany(Movie, { // inverse relationship should also be defined
+//   through: 'user_movie_list',
+//   foreignKey: 'userId'
+// })
+
+module.exports = { User, Movie, UsersMovies };
