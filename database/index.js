@@ -27,7 +27,7 @@ const Movie = sequelize.define('movie', { // model schema for movie -- lowercase
   voteAverage: Sequelize.FLOAT,
   userVotes: { 
     type: Sequelize.INTEGER,
-    dafaultValue: 0,
+    defaultValue: 0,
     allowNull: false,
   },
 });
