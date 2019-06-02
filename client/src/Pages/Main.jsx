@@ -26,7 +26,6 @@ class Main extends React.Component {
     super(props);
     this.state = {
       movies: [],
-      searchedMovies: [],
       search: '',
       movie: null,
     };
@@ -80,7 +79,7 @@ class Main extends React.Component {
     this.getSearchedMovies(input)
       .then((movies) => {
         this.setState({movie: null});
-        this.setState({searchedMovies: movies})
+        this.setState({movies: movies})
       })
       .catch((error) => {
         console.error(error);
@@ -117,14 +116,16 @@ class Main extends React.Component {
           <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
         </div>
       );
-    } else if (this.state.searchedMovies.length) { // show a movielist when page is visited and a movie is searched
-      return (
-        <div>
-          <Search handleSearch={this.handleSearch} />
-          <MovieList movies={this.state.movies} handleClick={this.handleClick} />
-        </div>
-      );
-    } else {
+    } 
+    // else if (this.state.searchedMovies.length) { // show a movielist when page is visited and a movie is searched
+    //   return (
+    //     <div>
+    //       <Search handleSearch={this.handleSearch} />
+    //       <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+    //     </div>
+    //   );
+    // }
+     else {
       return (
         <div>
           <Search handleSearch={this.handleSearch} />

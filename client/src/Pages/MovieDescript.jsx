@@ -62,7 +62,6 @@ class MovieDescript extends React.Component {
 
   handleVote(vote) {
     const { movie } = this.props;
-    console.log(movie);
     return axios.put('/votes', {
       title: movie.title,
       overview: movie.overview,
@@ -72,7 +71,6 @@ class MovieDescript extends React.Component {
       numFlag: vote,
     })
       .then((res) => {
-        console.log(res);
         this.setState({
           userVotes: res.data[0].userVotes,
         })
@@ -83,12 +81,10 @@ class MovieDescript extends React.Component {
   }
 
   upvote() {
-    console.log('upvote');
     this.handleVote(1);
   }
 
   downvote() {
-    console.log('downvote');
     this.handleVote(-1);
   }
 
