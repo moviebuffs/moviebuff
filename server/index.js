@@ -34,7 +34,7 @@ app.post('/movies', (req, res) => { // More logic needed
     vote_count,
     vote_average
   )
-  .then(() => res.send(201))
+  .then(() => res.send(201)) // respond with a good status
   .catch(error => {
     console.error(error);
     res.sendStatus(500);
@@ -44,7 +44,7 @@ app.post('/movies', (req, res) => { // More logic needed
 app.post('/users', (req, res) => {
   const { username, email } = req.body; // pull username and email from body sent from frontend
   storeUser(username, email) // store user info into database
-    .then(() => res.send(201))
+    .then(() => res.send(201)) // respond with a good status
     .catch(error => {
       console.error(error);
       res.sendStatus(500);
@@ -52,7 +52,8 @@ app.post('/users', (req, res) => {
 })
 
 app.put('/votes', (req, res) => {
-  changeVotes(); // more logic needed
+  const { movieId, sym } = req.body;
+  changeVotes( movieId , sym); // more logic needed
   grabUserVotes();
   // respond with changed object
 })
@@ -80,7 +81,7 @@ app.get('/now-playing', (req, res) => {
     })
 });
 
-// testing needed
+// test needed for verification
 app.get('/movie/:movieName', (req, res) => { // route that points to a movie name search
   const { movieName } = req.params; // pull movieName from body sent from front end
   getMovie(movieName)
