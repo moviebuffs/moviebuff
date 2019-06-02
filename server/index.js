@@ -45,8 +45,8 @@ app.post('/movies', (req, res) => {
 });
 
 app.post('/users', (req, res) => { 
-  const { username, email } = req.body; // pull username and email from body sent from frontend
-  storeUser(username, email) // store user info into database
+  const { displayName, email } = req.body.user; // pull username and email from body sent from frontend
+  storeUser(displayName, email) // store user info into database
     .then(() => res.send(201)) // respond with a good status
     .catch(error => {
       console.error(error);
@@ -66,12 +66,14 @@ app.put('/votes', (req, res) => { // should be called when up or downvote is cli
   .then(() => findMovieId(title)) // find the id from the title stored in the database
   .then(movDbId => changeVotes(movDbId, numFlag)) // change userVotes in the database
   .then(movDbId => grabUserVotes(movDbId)) // grabs userVotes from the database
-  .then(userVotes => res.send(userVotes)) // sends userVotes back to the client
+  .then(userVotes => res.json(userVotes)) // sends userVotes back to the client
   .catch(error => {
     console.error(error);
     res.sendStatus(500);
   })
 })
+
+app.get
 
 app.get('/now-playing', (req, res) => {
   nowPlaying()

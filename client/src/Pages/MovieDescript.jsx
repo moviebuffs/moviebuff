@@ -1,14 +1,27 @@
 import React from 'react';
 import axios from 'axios';
+// import { Button, Card, Row, Col } from 'react-materialize';
+import Button from '@material-ui/core/Button';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
+
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: purple,
+    secondary: {
+      main: '#f44336',
+    },
+  },
+});
 
 class MovieDescript extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       reviews: [],
-      voteCount: 0,
       movies: [],
     };
 
@@ -41,18 +54,6 @@ class MovieDescript extends React.Component {
         console.error(error);
       });
   }
-
-  // getVote() {
-  //   return axios.post('/getvote', {
-  //     movie: this.props.movie,
-  //   })
-  //     .then((vote) => {
-  //       return vote;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //   });
-  // }
 
   // handleVote(vote) {
   //   return axios.post('/vote', {
@@ -95,10 +96,10 @@ class MovieDescript extends React.Component {
           <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
         </div>
         <div>
-          <button>Upvote</button>
-          <h5>{this.state.voteCount}</h5>
-          <button>Downvote</button>
-          <button>Add to Watchlist</button>
+          <Button variant="contained" color="primary">Upvote</Button>
+          <h5>{this.props.userVotes}</h5>
+          <Button variant="contained" color="primary">Downvote</Button>
+          <Button variant="contained" color="primary">Add to Watchlist</Button>
         </div>
         <div>
           <ReviewList reviews={this.state.reviews} />
