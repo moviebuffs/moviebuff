@@ -59,7 +59,7 @@ class App extends React.Component {
       <button onClick={this.logout}>Log Out</button> :
       <button onClick={this.login}>Log In</button>
 
-    let userInfo = this.state.user ? <h5>Signed in using {this.state.user.email}</h5> : null
+    let userInfo = this.state.user ? <h5>Welcome {this.state.user.displayName}</h5> : null
 
     let homePage = this.state.user ? 
     <Main /> :

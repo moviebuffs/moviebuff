@@ -3,7 +3,7 @@ import M from 'materialize-css';
 // import '../App.css';
 import Movie from './Movie.jsx';
 // import Carousel from './Carousel.jsx';
-
+const _ = require('lodash');
 class MovieList extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +12,8 @@ class MovieList extends React.Component {
   }
 
   render() {
-    const { movies } = this.props;
+    const movies = _.shuffle(this.props.movies);
+    console.log(movies);
     return (
       <div>
         {movies.map((movie) => {

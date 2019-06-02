@@ -1,6 +1,7 @@
 import React from 'react';
 // import '../App.css';
 
+
 class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,7 @@ class Movie extends React.Component {
 
   render() {
     const { movie } = this.props;
+    
     return (
       <div>
         <div>
