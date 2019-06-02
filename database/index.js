@@ -20,14 +20,15 @@ const User = sequelize.define('user', { // model schema for user -- lowercase fo
 });
 
 const Movie = sequelize.define('movie', { // model schema for movie -- lowercase for psql. 
-  movieTitle: Sequelize.STRING,
+  title: Sequelize.STRING,
   movieDescription: Sequelize.STRING(2000),
   posterPath: Sequelize.STRING,
   voteCount: Sequelize.INTEGER,
   voteAverage: Sequelize.FLOAT,
   userVotes: { 
     type: Sequelize.INTEGER,
-    dafaultValue: 0,
+    defaultValue: 0,
+    allowNull: false,
   },
 });
 

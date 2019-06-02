@@ -6,9 +6,9 @@ const { User, Movie } = require('../../database');
 
 const storeUser = (username, email) => User.create({ username, email }); // create user with params to match schema
 
-const storeMovie = (movieTitle, movieDescription, posterPath, voteCount, voteAverage) =>
+const storeMovie = (title, movieDescription, posterPath, voteCount, voteAverage) =>
   Movie.create({ // creates database entry with params as keys to match schema
-    movieTitle,
+    title,
     movieDescription,
     posterPath,
     voteCount,
@@ -33,7 +33,10 @@ const findMovieId = title =>
 
 const changeVotes = (movDbId, sym) =>  // change userVotes in database -- Expects sym to be 1 or -1 -- Handles string edge case for sym value
   Movie.increment('userVotes', { by: Number(sym), where: { id: movDbId } }) // increments the userVotes of the movie matching the movie id
-    .then(movie => movie.id);
+    .then(movie => {
+      console.log(movie[0][0][0].id);
+      return movie[0][0][0].id;
+    });
 
 
 // API Helpers
