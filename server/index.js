@@ -56,8 +56,8 @@ app.put('/votes', (req, res) => {
     .then(movDbId => changeVotes(movDbId, sym)) // change userVotes in the database
     .then(movDbId => grabUserVotes(movDbId)) // grabs userVotes from the database
     .then(userVotes => {
-      console.log(userVotes);
-      res.send(userVotes) // sends userVotes back to the client
+      console.log(userVotes[0].userVotes);
+      res.send(userVotes); // sends userVotes back to the client
     })
     .catch(error => {
       console.error(error);
