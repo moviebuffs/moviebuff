@@ -6,13 +6,14 @@ const { User, Movie } = require('../../database');
 
 const storeUser = (username, email) => User.create({ username, email }); // create user with params to match schema
 
-const storeMovie = (movieTitle, movieDescription, posterPath, voteCount, voteAverage) =>
+const storeMovie = (title, movieDescription, posterPath, voteCount, voteAverage, userVotes = 0) =>
   Movie.create({ // creates database entry with params as keys to match schema
-    movieTitle,
+    title,
     movieDescription,
     posterPath,
     voteCount,
     voteAverage,
+    userVotes
   });
 
 const grabUserVotes = movDbId => // param passed in is the movie id from db

@@ -15,7 +15,6 @@ const { // pull all backend helper functions for server and database interaction
   storeUser,
   grabUserVotes,
   changeVotes,
-  findUserId,
   findMovieId 
 } = require('./helpers/index');
 
@@ -25,7 +24,7 @@ app.use(bodyParser.json());
 //listen for request on port 3000, and as a callback function have the port listened on logged
 app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}/`));
 
-app.post('/movies', (req, res) => { // Testing needed
+app.post('/movies', (req, res) => { 
   const { title, overview, poster_path, vote_count, vote_average } = req.body;
   storeMovie( // store movie data in database relative to schema
     title,
@@ -41,7 +40,7 @@ app.post('/movies', (req, res) => { // Testing needed
   })
 });
 
-app.post('/users', (req, res) => { // Testing needed
+app.post('/users', (req, res) => { 
   const { username, email } = req.body; // pull username and email from body sent from frontend
   storeUser(username, email) // store user info into database
     .then(() => res.send(201)) // respond with a good status
