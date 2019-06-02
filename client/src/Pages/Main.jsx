@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import { Carousel, Button, Card, Row, Col } from 'react-materialize';
 
 // import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
 // import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
 // import withStyles from '@material-ui/core/styles/withStyles'
 
 // import '../../App.css';
-import Login from '../Components/Login.jsx';
 import Search from '../Components/Search.jsx';
 import MovieList from '../Components/MovieList.jsx';
 import MovieDescript from './MovieDescript.jsx';
@@ -16,6 +16,7 @@ class Main extends React.Component {
     super(props);
     this.state = {
       movies: [],
+      searchedMovies: [],
       search: '',
       movie: null,
     };
@@ -52,7 +53,11 @@ class Main extends React.Component {
   componentDidMount(e) {
     this.getNowPlayingMovies()
       .then((response) => {
-        this.setState({ movies: response });
+        this.setState({
+          movies: response,
+          movie: null,
+          searchedMovies: [],
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -65,7 +70,7 @@ class Main extends React.Component {
     this.getSearchedMovies(input)
       .then((movies) => {
         this.setState({movie: null});
-        this.setState({movies: movies})
+        this.setState({searchedMovies: movies})
       })
       .catch((error) => {
         console.error(error);
@@ -83,25 +88,38 @@ class Main extends React.Component {
   }
 
   render() {
-    // show a movie's details when it is clicked
-    if (this.state.movie) {
+    if (this.state.movie) { // show a movie's details when it is clicked
       return (
         <div>
-          {/* <Login /> */}
           <Search handleSearch={this.handleSearch} />
           <MovieDescript movie={this.state.movie} user={this.props.user} />
         </div>
       );
-    // show a movielist when page is visited and a movie is searched
+    } else if (this.state.searchedMovies.length) { // show a movielist when page is visited and a movie is searched
+      return (
+        <div>
+          <Search handleSearch={this.handleSearch} />
+          <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+        </div>
+      );
     } else {
       return (
         <div>
-          {/* <Login /> */}
           <Search handleSearch={this.handleSearch} />
+            {/* {this.state.movies.map((movie) => {
+              return (
+              <div className="Red">
+                <h2>
+                  movie.title
+                </h2>
+                <p>
+                  movie.voteAvg
+                </p>
+              </div>
+            )
+            })} */}
           <MovieList movies={this.state.movies} handleClick={this.handleClick} />
-          {/* <MovieDescript movie={this.state.movie} /> */}
-          {/* <Carousel movies={this.state.movies} /> */}
-      </div>
+        </div>
       );
     }
   }

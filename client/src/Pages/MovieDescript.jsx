@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Button, Card, Row, Col } from 'react-materialize';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
 
@@ -95,10 +96,10 @@ class MovieDescript extends React.Component {
           <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
         </div>
         <div>
-          <button>Upvote</button>
+          <Button>Upvote</Button>
           <h5>{this.state.voteCount}</h5>
-          <button>Downvote</button>
-          <button>Add to Watchlist</button>
+          <Button waves="light">Downvote</Button>
+          <Button>Add to Watchlist</Button>
         </div>
         <div>
           <ReviewList reviews={this.state.reviews} />
