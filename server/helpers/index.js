@@ -15,17 +15,26 @@ const storeMovie = (movieTitle, movieDescription, posterPath, voteCount, voteAve
     voteAverage,
   });
 
-const grabUserVotes = movieId => 
-  Movie.findAll({
+const grabUserVotes = movDbId => // param passed in is the movie id from db
+  Movie.findAll({ // grab current userVotes value for a given movie by its id that is stored on the database
     attributes: ['userVotes'],
     where: {
-      id: movieId,
+      id: movDbId,
     },
   });
 
-const changeVotes = (movieId, sym) => 
-  sym === '+' ? Movie.update({ userVotes: Movie.userVotes + 1 }, { where: { id: movieId } }) 
-    : Movie.update({ userVotes: Movie.userVotes - 1 }, { where: { id: movieId } })
+const findUserId = username => 
+  User.findOne({ where: { username } })
+    .then(user => user.id); // sends back id of the user that matches username on User table
+
+const findMovieId = title =>
+  Movie.findOne({ where: { title } })
+    .then(movie => movie.id); // sends back id of the movie that matches title on Movie table
+
+const changeVotes = (movDbId, sym) =>  // change userVotes in database -- Expects sym to be 1 or -1 -- Handles string edge case for sym value
+  Movie.increment('userVotes', { by: Number(sym), where: { id: movDbId } }) // increments the userVotes of the movie matching the movie id
+    .then(movie => movie.id);
+
 
 // API Helpers
 
@@ -52,8 +61,6 @@ const getMovie = movieName => // grabs searched movies
   .then(response => response.data.results)
   .catch(err => console.error(err))
 
-
-
 const getPopular = () => // grabs popular movies
   axios.get('https://api.themoviedb.org/3/movie/popular', {
     params: {
@@ -65,9 +72,8 @@ const getPopular = () => // grabs popular movies
   })
   .then(response => response.data.results)
 
-
-const getReviews = movieId => // grabs movie reviews
-  axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews`, {
+const getReviews = movieId => // param passed in is the movie id from api call
+  axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews`, { // grabs movie reviews
     params: {
       api_key: API_KEY,
       language: 'en-US',
@@ -75,16 +81,6 @@ const getReviews = movieId => // grabs movie reviews
     }
   })
   .then(response => response.data.results)
-
-
-// module.exports.getMovie = getMovie;
-// module.exports.getPopular = getPopular;
-// module.exports.getReviews = getReviews;
-// module.exports.nowPlaying = nowPlaying;
-// module.exports.storeMovie = storeMovie;
-// module.exports.storeUser = storeUser;
-// module.exports.grabUserVotes = grabUserVotes;
-// module.exports.changeVotes = changeVotes;
 
 module.exports = {
   getMovie,
@@ -94,5 +90,7 @@ module.exports = {
   storeMovie,
   storeUser,
   grabUserVotes,
-  changeVotes
+  changeVotes,
+  findUserId,
+  findMovieId
 }

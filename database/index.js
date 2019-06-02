@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-//require('dotenv').config();
+
 const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.USERNAME, process.env.PASSWORD, {
   host: process.env.HOST,
   dialect: 'postgresql',
@@ -11,7 +11,7 @@ sequelize.authenticate()
   .catch(err => console.error('Could not connect to the database', err));
 
 sequelize.sync({
-  force: true,
+  force: true, // Drops info in database for testing 
 })
 
 const User = sequelize.define('user', { // model schema for user -- lowercase for psql. 

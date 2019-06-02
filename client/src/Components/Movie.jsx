@@ -1,6 +1,7 @@
 import React from 'react';
 // import '../App.css';
 
+
 class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -19,10 +20,11 @@ class Movie extends React.Component {
 
   render() {
     const { movie } = this.props;
+    
     return (
       <div>
         <div>
-          <h3 onClick={this.props.handleClick} >{movie.originalTitle}</h3>
+          <h3 onClick={this.props.handleClick} >{movie.title}</h3>
           <p>{movie.overview}</p>
         </div>
         <div>

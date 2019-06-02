@@ -86,7 +86,7 @@ class MovieDescript extends React.Component {
       <div>
         {/* information about movie; buttons for upvote/downvote; button for add to list; tweets; theatre links */}
         <div>
-          <h3>{movie.originalTitle}</h3>
+          <h3>{movie.title}</h3>
           <h4>{movie.voteAvg}</h4>
           <p>{movie.overview}</p>
         </div>
