@@ -25,7 +25,7 @@ class Movie extends React.Component {
     return (
       <div>
         <div>
-          <h3 onClick={this.props.handleClick} >{movie.originalTitle}</h3>
+          <h3 onClick={this.props.handleClick} >{movie.title}</h3>
           <p>{movie.overview}</p>
         </div>
         <div>
