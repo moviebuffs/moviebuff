@@ -33,7 +33,10 @@ const findMovieId = title =>
 
 const changeVotes = (movDbId, sym) =>  // change userVotes in database -- Expects sym to be 1 or -1 -- Handles string edge case for sym value
   Movie.increment('userVotes', { by: Number(sym), where: { id: movDbId } }) // increments the userVotes of the movie matching the movie id
-    .then(movie => movie.id);
+    .then(movie => {
+      console.log(movie[0][0][0].id);
+      return movie[0][0][0].id;
+    });
 
 
 // API Helpers
