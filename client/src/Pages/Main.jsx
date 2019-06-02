@@ -64,6 +64,7 @@ class Main extends React.Component {
     this.setState({ search: input })
     this.getSearchedMovies(input)
       .then((movies) => {
+        this.setState({movie: null});
         this.setState({movies: movies})
       })
       .catch((error) => {

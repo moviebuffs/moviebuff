@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 // import '../../App.css';
-import ReviewList from '../Components/ReviewList.jsx'
+import ReviewList from '../Components/ReviewList.jsx';
 
 class MovieDescript extends React.Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class MovieDescript extends React.Component {
     this.state = {
       reviews: [],
       voteCount: 0,
+      movies: [],
     };
 
     this.getReviews = this.getReviews.bind(this);
