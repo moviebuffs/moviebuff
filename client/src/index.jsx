@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 // react router imports
 // import { Route, Switch } from 'react-router-dom';
@@ -33,6 +34,11 @@ class App extends React.Component {
       this.setState({
         user: result.user
       })
+    })
+    .then(() => {
+      axios.post('/users', {
+      user: this.state.user,
+    })
     })
   }
   

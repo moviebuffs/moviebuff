@@ -1,6 +1,6 @@
 import React from 'react';
-import { Parallax, Button, Card, Row, Col } from 'react-materialize';
 // import '../App.css';
+import { Parallax } from 'react-materialize';
 
 
 class Movie extends React.Component {
@@ -25,10 +25,10 @@ class Movie extends React.Component {
     
     return (
       <div>
-        <Parallax image={<img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />} />
+        <Parallax onClick={this.handleSelect} options={ {responsiveThreshold: 3} } image={<img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />} />
         <div className="section white">
           <div className="row container">
-            <h2 className="header">
+            <h2 className="header" onClick={this.handleSelect}>
               {movie.title}
             </h2>
             <p className="grey-text text-darken-3 lighten-3">

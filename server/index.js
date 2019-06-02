@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}/`));
 
 app.post('/movies', (req, res) => { 
-  const { title, overview, poster_path, vote_count, vote_average } = req.body;
+  const { title, overview, poster_path, vote_count, vote_average } = req.body.movie;
   storeMovie( // store movie data in database relative to schema
     title,
     overview,
@@ -41,8 +41,8 @@ app.post('/movies', (req, res) => {
 });
 
 app.post('/users', (req, res) => { 
-  const { username, email } = req.body; // pull username and email from body sent from frontend
-  storeUser(username, email) // store user info into database
+  const { displayName, email } = req.body.user; // pull username and email from body sent from frontend
+  storeUser(displayName, email) // store user info into database
     .then(() => res.send(201)) // respond with a good status
     .catch(error => {
       console.error(error);

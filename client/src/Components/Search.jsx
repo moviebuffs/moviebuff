@@ -1,5 +1,4 @@
 import React from 'react';
-import { Carousel, Button, Card, Row, Col } from 'react-materialize';
 // import '../App.css';
 
 class Search extends React.Component {

@@ -1,6 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import { Carousel, Button, Card, Row, Col } from 'react-materialize';
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: purple,
+    secondary: {
+      main: '#f44336',
+    },
+  },
+});
 
 // import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
 // import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
@@ -82,6 +92,9 @@ class Main extends React.Component {
   handleClick(clickedMovieId) {
     this.state.movies.forEach((movie) => {
       if (movie.movieId === clickedMovieId) {
+        axios.post('/movies', {
+          movie: movie
+        })
         this.setState({movie: movie});
       }
     });
@@ -106,18 +119,6 @@ class Main extends React.Component {
       return (
         <div>
           <Search handleSearch={this.handleSearch} />
-            {/* {this.state.movies.map((movie) => {
-              return (
-              <div className="Red">
-                <h2>
-                  movie.title
-                </h2>
-                <p>
-                  movie.voteAvg
-                </p>
-              </div>
-            )
-            })} */}
           <MovieList movies={this.state.movies} handleClick={this.handleClick} />
         </div>
       );
