@@ -10,9 +10,9 @@ sequelize.authenticate()
   .then(() => console.log('Connected to the database'))
   .catch(err => console.error('Could not connect to the database', err));
 
-sequelize.sync({
-  force: true, // Drops info in database for testing 
-})
+// sequelize.sync({
+//   force: true, // Drops info in database for testing 
+// })
 
 const User = sequelize.define('user', { // model schema for user -- lowercase for psql. 
   username: Sequelize.STRING,
@@ -20,15 +20,12 @@ const User = sequelize.define('user', { // model schema for user -- lowercase fo
 });
 
 const Movie = sequelize.define('movie', { // model schema for movie -- lowercase for psql. 
-  movieTitle: Sequelize.STRING,
+  title: Sequelize.STRING,
   movieDescription: Sequelize.STRING(2000),
   posterPath: Sequelize.STRING,
   voteCount: Sequelize.INTEGER,
   voteAverage: Sequelize.FLOAT,
-  userVotes: { 
-    type: Sequelize.INTEGER,
-    dafaultValue: 0,
-  },
+  userVotes: Sequelize.INTEGER,
 });
 
 // Postgres will automatically make movie and user plural values in db tables
