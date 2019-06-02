@@ -1,8 +1,6 @@
 //Load HTTP module
 require('dotenv').config();
-const db = require('../database/index');
 const path = require('path');
-const http = require("http");
 const hostname = process.env.SERVER_HOST;
 const port = process.env.SERVER_PORT;
 const express = require('express');
@@ -16,7 +14,9 @@ const { // pull all backend helper functions for server and database interaction
   storeMovie,
   storeUser,
   grabUserVotes,
-  changeVotes 
+  changeVotes,
+  findUserId,
+  findMovieId 
 } = require('./helpers/index');
 
 app.use(express.static(path.join(__dirname, "../client/dist")));
@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 //listen for request on port 3000, and as a callback function have the port listened on logged
 app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}/`));
 
-app.post('/movies', (req, res) => { // More logic needed
+app.post('/movies', (req, res) => { // Testing needed
   const { title, overview, poster_path, vote_count, vote_average } = req.body;
   storeMovie( // store movie data in database relative to schema
     title,
@@ -41,7 +41,7 @@ app.post('/movies', (req, res) => { // More logic needed
   })
 });
 
-app.post('/users', (req, res) => {
+app.post('/users', (req, res) => { // Testing needed
   const { username, email } = req.body; // pull username and email from body sent from frontend
   storeUser(username, email) // store user info into database
     .then(() => res.send(201)) // respond with a good status
@@ -51,11 +51,19 @@ app.post('/users', (req, res) => {
     })
 })
 
-app.put('/votes', (req, res) => {
-  const { movieId, sym } = req.body;
-  changeVotes( movieId , sym); // more logic needed
-  grabUserVotes();
-  // respond with changed object
+app.put('/votes', (req, res) => { 
+  const { title, sym } = req.body; // pull title and sym from req.body passed in through frontend -- sym expected to be 1 or -1
+  findMovieId(title) // find the id from the title stored in the database
+    .then(movDbId => changeVotes(movDbId, sym)) // change userVotes in the database
+    .then(movDbId => grabUserVotes(movDbId)) // grabs userVotes from the database
+    .then(userVotes => {
+      console.log(userVotes);
+      res.send(userVotes) // sends userVotes back to the client
+    })
+    .catch(error => {
+      console.error(error);
+      res.sendStatus(500);
+    })
 })
 
 app.get('/now-playing', (req, res) => {
