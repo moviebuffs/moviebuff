@@ -25,7 +25,11 @@ const Movie = sequelize.define('movie', { // model schema for movie -- lowercase
   posterPath: Sequelize.STRING,
   voteCount: Sequelize.INTEGER,
   voteAverage: Sequelize.FLOAT,
-  userVotes: Sequelize.INTEGER,
+  userVotes: { 
+    type: Sequelize.INTEGER,
+    dafaultValue: 0,
+    allowNull: false,
+  },
 });
 
 // Postgres will automatically make movie and user plural values in db tables
