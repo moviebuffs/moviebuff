@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
+// import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
+// import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
+// import withStyles from '@material-ui/core/styles/withStyles'
+
 // import '../../App.css';
 import Login from '../Components/Login.jsx';
 import Search from '../Components/Search.jsx';
@@ -37,7 +41,6 @@ class Main extends React.Component {
   getSearchedMovies(movie) {
     return axios.get(`/movie/${movie}`)
       .then((movies) => {
-        console.log(movies);
         return movies.data.data;
       })
       .catch((error) => {
@@ -61,6 +64,7 @@ class Main extends React.Component {
     this.setState({ search: input })
     this.getSearchedMovies(input)
       .then((movies) => {
+        this.setState({movie: null});
         this.setState({movies: movies})
       })
       .catch((error) => {
@@ -78,7 +82,6 @@ class Main extends React.Component {
     });
   }
 
-  
   render() {
     // show a movie's details when it is clicked
     if (this.state.movie) {
@@ -86,7 +89,7 @@ class Main extends React.Component {
         <div>
           {/* <Login /> */}
           <Search handleSearch={this.handleSearch} />
-          <MovieDescript movie={this.state.movie} />
+          <MovieDescript movie={this.state.movie} user={this.props.user} />
         </div>
       );
     // show a movielist when page is visited and a movie is searched

@@ -62,7 +62,7 @@ class App extends React.Component {
     let userInfo = this.state.user ? <h5>Welcome {this.state.user.displayName}</h5> : null
 
     let homePage = this.state.user ? 
-    <Main /> :
+    <Main user={this.state.user} /> :
     null
 
     return (
