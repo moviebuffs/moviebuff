@@ -15,7 +15,9 @@ const { // pull all backend helper functions for server and database interaction
   storeUser,
   grabUserVotes,
   changeVotes,
-  findMovieId 
+  findUserId,
+  findMovieId,
+  storeUsersMovies 
 } = require('./helpers/index');
 
 app.use(express.static(path.join(__dirname, "../client/dist")));
@@ -25,7 +27,7 @@ app.use(bodyParser.json());
 app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}/`));
 
 app.post('/movies', (req, res) => { 
-  const { title, overview, poster_path, vote_count, vote_average } = req.body.movie;
+  const { title, overview, poster_path, vote_count, vote_average, email } = req.body;
   storeMovie( // store movie data in database relative to schema
     title,
     overview,
@@ -33,6 +35,8 @@ app.post('/movies', (req, res) => {
     vote_count,
     vote_average
   )
+  .then(() => findMovieId(title))
+  .then(movDbId => findUserId(email).then(uDbId => storeUsersMovies(movDbId, uDbId))) // stores user's movies into the join table
   .then(() => res.send(201)) // respond with a good status
   .catch(error => {
     console.error(error);
@@ -50,27 +54,32 @@ app.post('/users', (req, res) => {
     })
 })
 
-app.put('/votes', (req, res) => { 
-  const { title, sym } = req.body; // pull title and sym from req.body passed in through frontend -- sym expected to be 1 or -1
-  findMovieId(title) // find the id from the title stored in the database
-    .then(movDbId => changeVotes(movDbId, sym)) // change userVotes in the database
-    .then(movDbId => grabUserVotes(movDbId)) // grabs userVotes from the database
-    .then(userVotes => {
-      console.log(userVotes[0].userVotes);
-      res.send(userVotes); // sends userVotes back to the client
-    })
-    .catch(error => {
-      console.error(error);
-      res.sendStatus(500);
-    })
+app.put('/votes', (req, res) => { // should be called when up or downvote is clicked
+  const { title, overview, poster_path, vote_count, vote_average, numFlag } = req.body; // pull title and numFlag from req.body passed in through frontend -- numFlag expected to be 1 or -1
+  storeMovie( // store movie data in database relative to schema
+    title,
+    overview,
+    poster_path,
+    vote_count,
+    vote_average
+  )
+  .then(() => findMovieId(title)) // find the id from the title stored in the database
+  .then(movDbId => changeVotes(movDbId, numFlag)) // change userVotes in the database
+  .then(movDbId => grabUserVotes(movDbId)) // grabs userVotes from the database
+  .then(userVotes => res.json(userVotes)) // sends userVotes back to the client
+  .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+  })
 })
+
+app.get
 
 app.get('/now-playing', (req, res) => {
   nowPlaying()
     .then(movies => {
       const { results } = movies.data; // pull results from movies.data
       const currentMovies = results.map(movie => { // return an array of objects for each movie
-        console.log(movie);
         return {
           movieId: movie.id,
           title: movie.title,
@@ -88,7 +97,6 @@ app.get('/now-playing', (req, res) => {
     })
 });
 
-// test needed for verification
 app.get('/movie/:movieName', (req, res) => { // route that points to a movie name search
   const { movieName } = req.params; // pull movieName from body sent from front end
   getMovie(movieName)

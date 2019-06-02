@@ -16,7 +16,7 @@ class Movie extends React.Component {
 
   // send movie id up to main component to handle getting movie info and showing movie details
   handleSelect() {
-    this.props.handleClick(this.props.movie.movieId);
+    this.props.handleClick(this.props.movie);
   }
 
   

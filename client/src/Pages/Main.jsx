@@ -88,24 +88,33 @@ class Main extends React.Component {
     event.preventDefault();
   }
 
+  // { title, overview, poster_path, vote_count, vote_average, numFlag }
+
   // when a movie is clicked, set the state for movie to the object of the clicked movie
-  handleClick(clickedMovieId) {
-    this.state.movies.forEach((movie) => {
-      if (movie.movieId === clickedMovieId) {
-        axios.post('/movies', {
-          movie: movie
-        })
-        this.setState({movie: movie});
-      }
-    });
-  }
+  handleClick(movie) {
+    axios.put('/votes', {
+      title: movie.title,
+      overview: movie.overview,
+      poster_path: movie.posterPath,
+      vote_count: movie.voteCount,
+      vote_average: movie.voteAvg,
+      numFlag: 0,
+    })
+    .then((res) => {
+      console.log(res);
+      this.setState({
+        movie: movie,
+        userVotes: res.data[0].userVotes,
+      });
+    })
+  };
 
   render() {
     if (this.state.movie) { // show a movie's details when it is clicked
       return (
         <div>
           <Search handleSearch={this.handleSearch} />
-          <MovieDescript movie={this.state.movie} user={this.props.user} />
+          <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
         </div>
       );
     } else if (this.state.searchedMovies.length) { // show a movielist when page is visited and a movie is searched
@@ -123,7 +132,8 @@ class Main extends React.Component {
         </div>
       );
     }
-  }
+  };
+
 }
 
 export default Main;

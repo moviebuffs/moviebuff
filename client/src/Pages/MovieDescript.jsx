@@ -22,7 +22,6 @@ class MovieDescript extends React.Component {
     super(props);
     this.state = {
       reviews: [],
-      voteCount: 0,
       movies: [],
     };
 
@@ -98,7 +97,7 @@ class MovieDescript extends React.Component {
         </div>
         <div>
           <Button variant="contained" color="primary">Upvote</Button>
-          <h5>{this.state.voteCount}</h5>
+          <h5>{this.props.userVotes}</h5>
           <Button variant="contained" color="primary">Downvote</Button>
           <Button variant="contained" color="primary">Add to Watchlist</Button>
         </div>
