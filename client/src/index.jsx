@@ -5,7 +5,7 @@ import axios from 'axios';
 // react router imports
 // import { Route, Switch } from 'react-router-dom';
 // import { BrowserRouter } from 'react-router-dom';
-
+import { Row, Col, Card, Button, Icon } from 'react-materialize';
 // import '../App.css';
 import Main from './Pages/Main.jsx';
 // import MovieDescript from './Pages/MovieDescript.jsx';
@@ -14,6 +14,7 @@ import Main from './Pages/Main.jsx';
 
 //firebase imports
 import firebase, { auth, provider } from '../../firebaseConfig.js';
+import { Divider } from '@material-ui/core';
 
 class App extends React.Component {
   constructor(props) {
@@ -59,9 +60,41 @@ class App extends React.Component {
   }
 
   render() {
-    let authButton = this.state.user ?
+    let loginCard = !this.state.user ? 
+    <center>
+      <Row>
+        <Col m={14} >
+          <Card
+            title="Click here to sign in"
+            reveal={
+              <div>
+                <br />
+                <Button
+                  node="a"
+                  waves="light"
+                  large
+                  style={{ marginRight: '5px' }}
+                  onClick={this.login}
+                >
+                  Log In With Google
+                        <Icon left>
+                    cloud
+                        </Icon>
+                </Button>
+              </div>
+            }>
+            <img
+                src="https://previews.dropbox.com/p/thumb/AAenBmA3eg2r-f4plfaokgvDQcF15lR9LXlqPkkJc0d8U9DdB7uckvnqO1luyDzqvU-uArj2QgoO47WVOMlJI70Z0tji30jYfiyKbYLBOikPv-KmjjRX3L5QtOUwzPpfjPN5WkQxFEhbC_unirk6sv3LpUtGwPUJIlpej9uCiBEAwwJzqC_9R52tTwgNozbkCNSohilq0g07lfX7rkB-HhosPhourXCca0IS4y-wFGnH_ge2vycGSHr8kUE7dQFq0Z6fshb6Aes3KQo72TqWqxboxP_2CHi4YyyNQD3fSnd4PHzOnF7h0lC9EeCiZ_j2Ih2cA8jDpXchfNmeEEEMNZWG/p.jpeg?fv_content=true&size_mode=5"
+            />
+          </Card>
+        </Col>
+      </Row>
+    </center> : null;
+
+
+    let logoutButton = this.state.user ?
       <button onClick={this.logout}>Log Out</button> :   // when a user is logged in, show logout button and homepage
-      <button onClick={this.login}>Log In</button> // when a user is logged out, show login button
+      null
 
     let userInfo = this.state.user ? <h5>Welcome, {this.state.user.displayName}</h5> : null
 
@@ -73,7 +106,8 @@ class App extends React.Component {
       <div>
         <div>
           {userInfo}
-          {authButton}
+          {loginCard}
+          {logoutButton}
         </div>
         <div>
           {homePage}
