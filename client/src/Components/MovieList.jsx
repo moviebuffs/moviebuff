@@ -2,8 +2,6 @@ import React from 'react';
 // import '../App.css';
 import Movie from './Movie.jsx';
 
-const _ = require('lodash');
-
 class MovieList extends React.Component {
   constructor(props) {
     super(props);
@@ -12,8 +10,7 @@ class MovieList extends React.Component {
   }
 
   render() {
-    const movies = _.shuffle(this.props.movies);
-    console.log(movies);
+    const { movies } = this.props;
     return (
       <div>
         {movies.map((movie) => {

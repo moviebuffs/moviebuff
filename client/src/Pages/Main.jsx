@@ -1,5 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+const _ = require('lodash');
+
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
 
 import Navbar from '../Components/Navbar.jsx'
 import Search from '../Components/Search.jsx';
@@ -27,7 +31,7 @@ class Main extends React.Component {
   getNowPlayingMovies() {
     return axios.get('/now-playing')
       .then((movies) => {
-        return movies.data.data;
+        return _.shuffle(movies.data.data);
       })
       .catch((error) => {
         console.error(error);

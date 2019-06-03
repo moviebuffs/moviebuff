@@ -4,6 +4,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
+import Video from '../Components/Video.jsx';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
@@ -26,6 +27,7 @@ class MovieDescript extends React.Component {
     };
 
     this.getReviews = this.getReviews.bind(this);
+    // this.getTrailer = this.getTrailer.bind(this);
     this.handleVote = this.handleVote.bind(this);
     this.addToList = this.addToList.bind(this);
     this.upvote = this.upvote.bind(this);
@@ -43,7 +45,8 @@ class MovieDescript extends React.Component {
       .catch((error) => {
         console.error(error);
       });
-  }
+    }
+    
 
   // when this component is rendered, get reviews
   componentDidMount(e) {
@@ -105,9 +108,16 @@ class MovieDescript extends React.Component {
       });
   }
 
+
   // show detailed info about movie and reviews about movie
   render() {
     const { movie } = this.props;
+    let trailer;
+    if (this.state.trailer) {
+      trailer = <div>
+        <iframe width="853" height="480" src={`https://www.youtube.com/embed/${this.state.trailer.id.videoId}`} frameborder="0" allowfullscreen></iframe>
+      </div>
+    }
     return (
       <div>
         {/* information about movie; buttons for upvote/downvote; button for add to list; tweets; theatre links */}
@@ -126,6 +136,7 @@ class MovieDescript extends React.Component {
           <Button onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
         </div>
         <div>
+          <Video movie={movie} />
           <ReviewList reviews={this.state.reviews} />
         </div>
       </div>
