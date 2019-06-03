@@ -116,13 +116,10 @@ class MovieDescript extends React.Component {
       margin: '20px',
     }
 
-<<<<<<< HEAD
     const buttonStyle = {
       margin: '5px',
     }
 
-=======
->>>>>>> 5a3fc651cd2c37fd618929c89374b57a649eac3f
     const cardStyle = {
       display: 'flex',
       alignItems: 'center',
@@ -139,7 +136,6 @@ class MovieDescript extends React.Component {
     const { movie } = this.props;
 
     return (
-<<<<<<< HEAD
       <div>
         <Media query="(max-width: 400px)">
           {matches =>
@@ -212,39 +208,6 @@ class MovieDescript extends React.Component {
               )
           }
         </Media>
-=======
-        <div style={containerStyle}>
-          <Box style={appStyle} display="flex" flexDirection="column">
-          <Card style={cardStyle} >
-            <CardActionArea>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {movie.title}
-                </Typography>
-                <br />
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {movie.overview}
-                </Typography>
-                <br />
-                <Typography gutterBottom variant="h5" component="h2">
-                  Average Rating: {movie.voteAvg}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-          <br />
-          <br />
-            <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
-            <Box style={appStyle} display="flex" flexDirection="row">
-              <Button style={btnStyle} onClick={this.upvote} variant="contained" color="primary">Upvote</Button>
-              <h5>{this.state.userVotes}</h5>
-              <Button style={btnStyle} onClick={this.downvote} variant="contained" color="primary">Downvote</Button>
-              <Button style={btnStyle} onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
-            </Box>
-            <Video movie={movie} />
-            <ReviewList reviews={this.state.reviews} />
-          </Box>
->>>>>>> 5a3fc651cd2c37fd618929c89374b57a649eac3f
       </div>
     );
   }
