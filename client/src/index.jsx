@@ -14,7 +14,6 @@ import Main from './Pages/Main.jsx';
 
 //firebase imports
 import firebase, { auth, provider } from '../../firebaseConfig.js';
-import { Divider } from '@material-ui/core';
 
 class App extends React.Component {
   constructor(props) {
@@ -44,7 +43,7 @@ class App extends React.Component {
   }
   
   logout() {
-    auth.signOut().then((result) => {
+    auth.signOut().then(() => {
       this.setState({
         user: null
       })
