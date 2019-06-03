@@ -6,27 +6,13 @@ import Media from 'react-media';
 import { spacing } from '@material-ui/system';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
 import Video from '../Components/Video.jsx';
-
-import { createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: purple,
-    secondary: {
-      main: '#f44336',
-    },
-  },
-});
 
 class MovieDescript extends React.Component {
   constructor(props) {
@@ -130,20 +116,30 @@ class MovieDescript extends React.Component {
       margin: '20px',
     }
 
+<<<<<<< HEAD
     const buttonStyle = {
       margin: '5px',
     }
 
+=======
+>>>>>>> 5a3fc651cd2c37fd618929c89374b57a649eac3f
     const cardStyle = {
-      margin: 'auto',
-      maxWidth: '800px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
     }
+
+    const containerStyle = {
+      margin: "20px",
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }
+
     const { movie } = this.props;
 
     return (
+<<<<<<< HEAD
       <div>
         <Media query="(max-width: 400px)">
           {matches =>
@@ -216,6 +212,39 @@ class MovieDescript extends React.Component {
               )
           }
         </Media>
+=======
+        <div style={containerStyle}>
+          <Box style={appStyle} display="flex" flexDirection="column">
+          <Card style={cardStyle} >
+            <CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {movie.title}
+                </Typography>
+                <br />
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {movie.overview}
+                </Typography>
+                <br />
+                <Typography gutterBottom variant="h5" component="h2">
+                  Average Rating: {movie.voteAvg}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+          <br />
+          <br />
+            <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
+            <Box style={appStyle} display="flex" flexDirection="row">
+              <Button style={btnStyle} onClick={this.upvote} variant="contained" color="primary">Upvote</Button>
+              <h5>{this.state.userVotes}</h5>
+              <Button style={btnStyle} onClick={this.downvote} variant="contained" color="primary">Downvote</Button>
+              <Button style={btnStyle} onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
+            </Box>
+            <Video movie={movie} />
+            <ReviewList reviews={this.state.reviews} />
+          </Box>
+>>>>>>> 5a3fc651cd2c37fd618929c89374b57a649eac3f
       </div>
     );
   }
