@@ -116,8 +116,6 @@ class MovieDescript extends React.Component {
       margin: '20px',
     }
     const cardStyle = {
-      margin: 'auto',
-      maxWidth: '800px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

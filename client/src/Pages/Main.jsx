@@ -131,7 +131,9 @@ class Main extends React.Component {
         />
           <div>
             <Search handleSearch={this.handleSearch} />
-            <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
+            <Box maxWidth={800}>
+              <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
+            </Box>
           </div>
         </div>
         :
