@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 const _ = require('lodash');
+import { sizing } from '@material-ui/system';
+import Box from '@material-ui/core/Box';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
@@ -142,7 +144,9 @@ class Main extends React.Component {
           />
           <div>
             <Search handleSearch={this.handleSearch} />
-            <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+            <Box maxWidth={800}>
+              <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+            </Box>
           </div>
         </div>
   };
