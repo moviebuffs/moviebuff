@@ -63,7 +63,7 @@ class App extends React.Component {
       <button onClick={this.logout}>Log Out</button> :   // when a user is logged in, show logout button and homepage
       <button onClick={this.login}>Log In</button> // when a user is logged out, show login button
 
-    let userInfo = this.state.user ? <h5>Welcome {this.state.user.displayName}</h5> : null
+    let userInfo = this.state.user ? <h5>Welcome, {this.state.user.displayName}</h5> : null
 
     let homePage = this.state.user ? 
     <Main user={this.state.user} /> :

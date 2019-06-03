@@ -34,6 +34,8 @@ class Main extends React.Component {
     this.getSearchedMovies = this.getSearchedMovies.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.viewWatchlist = this.viewWatchlist.bind(this);
+    this.goHome = this.goHome.bind(this);
   }
 
   // handle request for movies playing in theatres now
@@ -65,7 +67,6 @@ class Main extends React.Component {
         this.setState({
           movies: response,
           movie: null,
-          searchedMovies: [],
         });
       })
       .catch((error) => {
@@ -87,7 +88,28 @@ class Main extends React.Component {
     event.preventDefault();
   }
 
-  // { title, overview, poster_path, vote_count, vote_average, numFlag }
+  goHome() {
+    this.getNowPlayingMovies()
+      .then((response) => {
+        this.setState({
+          movies: response,
+          movie: null,
+        });
+      })
+  }
+
+  viewWatchlist() {
+    axios.post('/usersMovies', {email: this.props.user.email})
+      .then((res) => {
+        this.setState({
+          movies: res.data,
+          movie: null,
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
 
   // when a movie is clicked, set the state for movie to the object of the clicked movie
   handleClick(movie) {
@@ -112,6 +134,8 @@ class Main extends React.Component {
       return (
         <div>
           <Search handleSearch={this.handleSearch} />
+          <button onClick={this.goHome}>Home</button>
+          <button onClick={this.viewWatchlist}>View Watchlist</button>
           <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
         </div>
       );
@@ -128,6 +152,8 @@ class Main extends React.Component {
       return (
         <div>
           <Search handleSearch={this.handleSearch} />
+          <button onClick={this.goHome}>Home</button>
+          <button onClick={this.viewWatchlist}>View Watchlist</button>
           <MovieList movies={this.state.movies} handleClick={this.handleClick} />
         </div>
       );
