@@ -2,17 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-
 // react router imports
 // import { Route, Switch } from 'react-router-dom';
 // import { BrowserRouter } from 'react-router-dom';
-import { Row, Col, Card, Button, Icon } from 'react-materialize';
 // import '../App.css';
+import LoginCard from './Components/LoginCard.jsx'
 import Main from './Pages/Main.jsx';
 // import MovieDescript from './Pages/MovieDescript.jsx';
 // import UserAccount from './Pages/UserAccount.jsx';
@@ -72,73 +66,15 @@ class App extends React.Component {
       alignItems: 'center', 
     }
 
-    let loginCard = !this.state.user ? 
-    <div>
-      <center>
-        <Row>
-          <Col >
-            <Card
-              title="Click here to sign in"
-              reveal={
-                <div>
-                  <br /><br />
-                  <Button
-                    node="a"
-                    waves="light"
-                    large
-                    onClick={this.login}
-                  >
-                    Log In With Google
-                          <Icon left>
-                      cloud
-                          </Icon>
-                  </Button>
-                </div>
-              }>
-              <img
-                  src="https://content.screencast.com/users/khari9987274/folders/Default/media/cd034270-ed95-4387-836a-c0daada0c4be/logo.jpg"
-              />
-            </Card>
-          </Col>
-        </Row>
-      </center>
-    </div> : null;
-
-    let navBar = this.state.user ? 
-    <div>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <IconButton edge="start" color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h5" color="inherit">
-            Welcome, {this.state.user.displayName}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div> : null;
-
-    let logoutButton = this.state.user ? <button onClick={this.logout}>Log Out</button> 
-                      : null   // when a user is logged in, show logout button and homepage
-      
-    let userInfo = this.state.user ? <h5>Welcome, {this.state.user.displayName}</h5> : null
-
-    let homePage = this.state.user ? 
-    <Main user={this.state.user} /> :
-    null
-
     return (
       <div style={appStyle}>
-        <div>
-          <div>
-            {navBar}
-            {loginCard}
-            {logoutButton}
-          </div>
-          <div>
-            {homePage}
-          </div>
-        </div>
+          {
+            !this.state.user ? <LoginCard loginClick={this.login} /> 
+              : <Main 
+                  user={this.state.user} 
+                  logoutClick={this.logout} 
+                />
+          }
       </div>
     );
   }

@@ -5,20 +5,7 @@ const _ = require('lodash');
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: purple,
-    secondary: {
-      main: '#f44336',
-    },
-  },
-});
-
-// import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
-// import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
-// import withStyles from '@material-ui/core/styles/withStyles'
-
-// import '../../App.css';
+import Navbar from '../Components/Navbar.jsx'
 import Search from '../Components/Search.jsx';
 import MovieList from '../Components/MovieList.jsx';
 import MovieDescript from './MovieDescript.jsx';
@@ -132,34 +119,26 @@ class Main extends React.Component {
   };
 
   render() {
-    if (this.state.movie) { // show a movie's details when it is clicked
-      return (
+    return this.state.movie ? // show a movie's details when it is clicked
         <div>
           <Search handleSearch={this.handleSearch} />
           <button onClick={this.goHome}>Home</button>
           <button onClick={this.viewWatchlist}>View Watchlist</button>
           <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
         </div>
-      );
-    } 
-    // else if (this.state.searchedMovies.length) { // show a movielist when page is visited and a movie is searched
-    //   return (
-    //     <div>
-    //       <Search handleSearch={this.handleSearch} />
-    //       <MovieList movies={this.state.movies} handleClick={this.handleClick} />
-    //     </div>
-    //   );
-    // }
-     else {
-      return (
+        :
         <div>
-          <Search handleSearch={this.handleSearch} />
-          <button onClick={this.goHome}>Home</button>
-          <button onClick={this.viewWatchlist}>View Watchlist</button>
-          <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+          <Navbar 
+            logoutClick={this.props.logoutClick}
+            goHome={this.goHome}
+            viewWatchlist={this.viewWatchlist}
+            user={this.props.user}
+          />
+          <div>
+            <Search handleSearch={this.handleSearch} />
+            <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+          </div>
         </div>
-      );
-    }
   };
 
 }
