@@ -100,7 +100,6 @@ class Main extends React.Component {
       numFlag: 0,
     })
     .then((res) => {
-      console.log(res);
       this.setState({
         movie: movie,
         userVotes: res.data[0].userVotes,
