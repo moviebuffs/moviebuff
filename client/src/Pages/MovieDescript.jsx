@@ -4,6 +4,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
+import Video from '../Components/Video.jsx';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
@@ -26,6 +27,7 @@ class MovieDescript extends React.Component {
     };
 
     this.getReviews = this.getReviews.bind(this);
+    this.getTrailer = this.getTrailer.bind(this);
     this.handleVote = this.handleVote.bind(this);
     this.addToList = this.addToList.bind(this);
     this.upvote = this.upvote.bind(this);
@@ -43,6 +45,20 @@ class MovieDescript extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+    }
+    
+  getTrailer() {
+    console.log(this.props.movie.title);
+    return axios.get('/trailer/:title', {
+      params: {title: this.props.movie.title},
+    })
+      .then((res) => {
+        console.log(res);
+        return res.data[0];
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   // when this component is rendered, get reviews
@@ -59,7 +75,8 @@ class MovieDescript extends React.Component {
       });
     this.getTrailer()
       .then((trailer) => {
-        this.setState({trailer: res});
+        console.log(trailer);
+        this.setState({trailer: trailer});
       })
       .catch((err) => {
         console.error(err);
@@ -112,17 +129,6 @@ class MovieDescript extends React.Component {
       });
   }
 
-  getTrailer() {
-    return axios.get('/trailer', {
-      title: this.props.movie.title,
-    })
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
 
   // show detailed info about movie and reviews about movie
   render() {
@@ -145,7 +151,7 @@ class MovieDescript extends React.Component {
           <Button onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
         </div>
         <div>
-          <Video />
+          <Video trailer={this.state.trailer} />
           <ReviewList reviews={this.state.reviews} />
         </div>
       </div>

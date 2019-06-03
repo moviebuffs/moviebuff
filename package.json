@@ -35,7 +35,8 @@
     "react-materialize": "^3.3.1",
     "react-router-dom": "^5.0.0",
     "react-with-firebase-auth": "^1.0.3",
-    "sequelize": "^5.8.7"
+    "sequelize": "^5.8.7",
+    "style-loader": "^0.23.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

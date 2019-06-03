@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { API_KEY, api_key } = require('../../config')
+const { API_KEY, youtube_api_key } = require('../../config')
 const { User, Movie, UsersMovies } = require('../../database');
 const Sequelize = require('sequelize');
 
@@ -120,9 +120,9 @@ const getReviews = movieId => // param passed in is the movie id from api call
 
 
 const getTrailer = (movieName) => {
-  axios.get(`https://www.googleapis.com/youtube/v3/search`, {
+  return axios.get(`https://www.googleapis.com/youtube/v3/search`, {
     params: {
-      key: api_key,
+      key: youtube_api_key,
       q: `${movieName} trailer`,
       maxResults: 1,
       part: 'snippet',
