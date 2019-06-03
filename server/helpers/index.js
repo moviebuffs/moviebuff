@@ -1,20 +1,23 @@
 const axios = require('axios');
 const { API_KEY } = require('../../config')
 const { User, Movie, UsersMovies } = require('../../database');
+const Sequelize = require('sequelize');
+
+const Op = Sequelize.Op; // needed for special Sequelize queries
 
 // Database Helpers
 
 // Creation Functions
 
 const storeUser = (username, email) => User.findOrCreate({ // create user with params to match schema
-  where: { email }, 
-  defaults: { username, email }
+  where: { email }, // keeps entries unique to email
+  defaults: { username, email } // stores params with corresponding keys
 }); 
 
 const storeMovie = (title, movieDescription, posterPath, voteCount, voteAverage) =>
   Movie.findOrCreate({ // creates database entry with params as keys to match schema
-    where: { title },
-    defaults: { 
+    where: { title }, // keeps entries unique to the title
+    defaults: { // stores params with corresponding keys
       title,
       movieDescription,
       posterPath,
@@ -23,25 +26,40 @@ const storeMovie = (title, movieDescription, posterPath, voteCount, voteAverage)
     }
 });
 
-const storeUsersMovies = (uDbId, movDbId) => 
-  UsersMovies.findOrCreate({ 
+const storeUsersMovies = (uDbId, movDbId) => // takes in user and movie id's from database
+  UsersMovies.findOrCreate({ // creates a join table with unique values for movieId and userId
     where: { userId: uDbId, movieId: movDbId }, 
     defaults: { userId: uDbId, movieId: movDbId }
   })
 
-
 // Retrieval functions
 
-const grabUserVotes = movDbId => // param passed in is the movie id from database 
-  Movie.findAll({ // grab current userVotes value for a given movie by its id that is stored on the database
+const findUsersMovies = uDbId => // param passed in is the user id from database
+  UsersMovies.findAll({ // find all movieId's stored on join table tied to given user id
+    attributes: ['movieId'],
+    where: { userId: uDbId} 
+  });
+
+
+const findUserVotes = movDbId => // param passed in is the movie id from database 
+  Movie.findAll({ // find current userVotes value for a given movie by its id that is stored on the database
     attributes: ['userVotes'],
     where: {
       id: movDbId,
     },
   });
 
+const findAllMovies = movDbIdArr => // pass in array of movie id's grabbed from join table in database
+  Movie.findAll({ // find all movies that match the given id's in the movieDbArr
+    where: {
+      id: {
+        [Op.or]: movDbIdArr 
+      }
+    }
+  });
+
 const findUserId = email => 
-  User.findOne({ where: { email } })
+  User.findOne({ where: { email } }) 
     .then(user => user.id); // sends back id of the user that matches username on User table
 
 const findMovieId = title =>
@@ -53,7 +71,6 @@ const findMovieId = title =>
 const changeVotes = (movDbId, numFlag) =>  // change userVotes in database -- Expects numFlag to be 1 or -1 -- Handles string edge case for numFlag value
   Movie.increment('userVotes', { by: Number(numFlag), where: { id: movDbId } }) // increments the userVotes of the movie matching the movie id
     .then(movie => movie[0][0][0].id); // No idea why the model object is this deeply nested but it is. Leave this alone. It works
-
 
 // API Helpers
 
@@ -108,9 +125,11 @@ module.exports = {
   nowPlaying,
   storeMovie,
   storeUser,
-  grabUserVotes,
+  findUserVotes,
   changeVotes,
   findUserId,
   findMovieId,
-  storeUsersMovies
+  storeUsersMovies,
+  findUsersMovies,
+  findAllMovies
 }

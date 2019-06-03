@@ -34,19 +34,8 @@ const Movie = sequelize.define('movie', { // model schema for movie -- lowercase
 
 // Postgres will automatically make movie and user plural values in db tables
 
-const UsersMovies = sequelize.define('users_movies', {});
-UsersMovies.belongsTo(User);
-UsersMovies.belongsTo(Movie);
-
-
-// Movie.belongsToMany(User, { // defines relationship
-//   through: 'user_movie_list', // stores reference on join table
-//   foreignKey: 'movieId' // links correct id
-// })
-
-// User.belongsToMany(Movie, { // inverse relationship should also be defined
-//   through: 'user_movie_list',
-//   foreignKey: 'userId'
-// })
+const UsersMovies = sequelize.define('users_movies', {}); // create join table as new table so it can be referenced as variable
+UsersMovies.belongsTo(User); // define join table relationship to User
+UsersMovies.belongsTo(Movie); // define join table relationship to Movie
 
 module.exports = { User, Movie, UsersMovies };
