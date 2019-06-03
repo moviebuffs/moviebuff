@@ -2,11 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import Navbar from '../Components/Navbar.jsx'
+
 
 const theme = createMuiTheme({
   palette: {
@@ -156,23 +153,14 @@ class Main extends React.Component {
      else {
       return (
         <div>
-          <div>
-            <AppBar position="static">
-              <Toolbar variant="dense">
-                <IconButton edge="start" color="inherit" aria-label="Menu">
-                  <MenuIcon />
-                </IconButton>
-                <Typography variant="h5" color="inherit">
-                  Welcome, {this.props.user.displayName}
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <button onClick={this.props.logoutClick}>Log Out</button>
-          </div>
+          <Navbar 
+            logoutClick={this.props.logoutClick}
+            goHome={this.goHome}
+            viewWatchlist={this.viewWatchlist}
+            user={this.props.user}
+          />
           <div>
             <Search handleSearch={this.handleSearch} />
-            <button onClick={this.goHome}>Home</button>
-            <button onClick={this.viewWatchlist}>View Watchlist</button>
             <MovieList movies={this.state.movies} handleClick={this.handleClick} />
           </div>
         </div>
