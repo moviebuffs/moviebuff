@@ -131,7 +131,11 @@ class Main extends React.Component {
         />
           <div>
             <Search handleSearch={this.handleSearch} />
+<<<<<<< HEAD
+            <Box display="flex" maxWidth={800}>
+=======
             <Box maxWidth={800}>
+>>>>>>> 5a3fc651cd2c37fd618929c89374b57a649eac3f
               <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
             </Box>
           </div>
