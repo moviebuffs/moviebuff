@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 // react router imports
 // import { Route, Switch } from 'react-router-dom';
@@ -7,9 +8,9 @@ import ReactDOM from 'react-dom';
 
 // import '../App.css';
 import Main from './Pages/Main.jsx';
-import MovieDescript from './Pages/MovieDescript.jsx';
-import UserAccount from './Pages/UserAccount.jsx';
-import SearchResults from './Pages/SearchResults.jsx';
+// import MovieDescript from './Pages/MovieDescript.jsx';
+// import UserAccount from './Pages/UserAccount.jsx';
+// import SearchResults from './Pages/SearchResults.jsx';
 
 //firebase imports
 import firebase, { auth, provider } from '../../firebaseConfig.js';
@@ -34,6 +35,11 @@ class App extends React.Component {
         user: result.user
       })
     })
+    .then(() => {
+      axios.post('/users', {
+      user: this.state.user,
+    })
+    })
   }
   
   logout() {
@@ -52,12 +58,10 @@ class App extends React.Component {
     })
   }
 
-  // when a user is logged out, show login button
-  // when a user is logged in, show logout button and homepage
   render() {
     let authButton = this.state.user ?
-      <button onClick={this.logout}>Log Out</button> :
-      <button onClick={this.login}>Log In</button>
+      <button onClick={this.logout}>Log Out</button> :   // when a user is logged in, show logout button and homepage
+      <button onClick={this.login}>Log In</button> // when a user is logged out, show login button
 
     let userInfo = this.state.user ? <h5>Welcome {this.state.user.displayName}</h5> : null
 

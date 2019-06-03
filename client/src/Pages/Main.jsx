@@ -1,12 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: purple,
+    secondary: {
+      main: '#f44336',
+    },
+  },
+});
 
 // import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
 // import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
 // import withStyles from '@material-ui/core/styles/withStyles'
 
 // import '../../App.css';
-import Login from '../Components/Login.jsx';
 import Search from '../Components/Search.jsx';
 import MovieList from '../Components/MovieList.jsx';
 import MovieDescript from './MovieDescript.jsx';
@@ -52,7 +62,11 @@ class Main extends React.Component {
   componentDidMount(e) {
     this.getNowPlayingMovies()
       .then((response) => {
-        this.setState({ movies: response });
+        this.setState({
+          movies: response,
+          movie: null,
+          searchedMovies: [],
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -73,38 +87,53 @@ class Main extends React.Component {
     event.preventDefault();
   }
 
+  // { title, overview, poster_path, vote_count, vote_average, numFlag }
+
   // when a movie is clicked, set the state for movie to the object of the clicked movie
-  handleClick(clickedMovieId) {
-    this.state.movies.forEach((movie) => {
-      if (movie.movieId === clickedMovieId) {
-        this.setState({movie: movie});
-      }
-    });
-  }
+  handleClick(movie) {
+    axios.put('/votes', {
+      title: movie.title,
+      overview: movie.overview,
+      poster_path: movie.posterPath,
+      vote_count: movie.voteCount,
+      vote_average: movie.voteAvg,
+      numFlag: 0,
+    })
+    .then((res) => {
+      this.setState({
+        movie: movie,
+        userVotes: res.data[0].userVotes,
+      });
+    })
+  };
 
   render() {
-    // show a movie's details when it is clicked
-    if (this.state.movie) {
+    if (this.state.movie) { // show a movie's details when it is clicked
       return (
         <div>
-          {/* <Login /> */}
           <Search handleSearch={this.handleSearch} />
-          <MovieDescript movie={this.state.movie} user={this.props.user} />
+          <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
         </div>
       );
-    // show a movielist when page is visited and a movie is searched
-    } else {
+    } 
+    // else if (this.state.searchedMovies.length) { // show a movielist when page is visited and a movie is searched
+    //   return (
+    //     <div>
+    //       <Search handleSearch={this.handleSearch} />
+    //       <MovieList movies={this.state.movies} handleClick={this.handleClick} />
+    //     </div>
+    //   );
+    // }
+     else {
       return (
         <div>
-          {/* <Login /> */}
           <Search handleSearch={this.handleSearch} />
           <MovieList movies={this.state.movies} handleClick={this.handleClick} />
-          {/* <MovieDescript movie={this.state.movie} /> */}
-          {/* <Carousel movies={this.state.movies} /> */}
-      </div>
+        </div>
       );
     }
-  }
+  };
+
 }
 
 export default Main;

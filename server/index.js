@@ -1,4 +1,3 @@
-//Load HTTP module
 require('dotenv').config();
 const path = require('path');
 const hostname = process.env.SERVER_HOST;
@@ -70,8 +69,8 @@ app.post('/reviews', (req, res) => { // Testing needed -- edge case and destruct
 });
 
 app.post('/users', (req, res) => { 
-  const { username, email } = req.body; // pull username and email from body sent from frontend
-  storeUser(username, email) // store user info into database
+  const { displayName, email } = req.body.user; // pull username and email from body sent from frontend
+  storeUser(displayName, email) // store user info into database
     .then(() => res.send(201)) // respond with a good status
     .catch(error => {
       console.error(error);
