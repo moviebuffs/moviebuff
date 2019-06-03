@@ -89,7 +89,7 @@ class App extends React.Component {
                 </div>
               }>
               <img
-                  src="https://content.screencast.com/users/khari9987274/folders/Jing/media/d5b6f1ba-417d-4017-a74e-90b046f99181/00002025.png"
+                  src="https://content.screencast.com/users/khari9987274/folders/Default/media/cd034270-ed95-4387-836a-c0daada0c4be/logo.jpg"
               />
             </Card>
           </Col>
