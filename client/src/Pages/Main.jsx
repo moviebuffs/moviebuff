@@ -121,10 +121,16 @@ class Main extends React.Component {
   render() {
     return this.state.movie ? // show a movie's details when it is clicked
         <div>
-          <Search handleSearch={this.handleSearch} />
-          <button onClick={this.goHome}>Home</button>
-          <button onClick={this.viewWatchlist}>View Watchlist</button>
-          <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
+        <Navbar
+          logoutClick={this.props.logoutClick}
+          goHome={this.goHome}
+          viewWatchlist={this.viewWatchlist}
+          user={this.props.user}
+        />
+          <div>
+            <Search handleSearch={this.handleSearch} />
+            <MovieDescript userVotes={this.state.userVotes} movie={this.state.movie} user={this.props.user} />
+          </div>
         </div>
         :
         <div>
