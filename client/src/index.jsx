@@ -60,36 +60,42 @@ class App extends React.Component {
   }
 
   render() {
+    const appStyle = { 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+    }
     let loginCard = !this.state.user ? 
-    <center>
-      <Row>
-        <Col m={14} >
-          <Card
-            title="Click here to sign in"
-            reveal={
-              <div>
-                <br /><br />
-                <Button
-                  node="a"
-                  waves="light"
-                  large
-                  style={{ marginRight: '5px' }}
-                  onClick={this.login}
-                >
-                  Log In With Google
-                        <Icon left>
-                    cloud
-                        </Icon>
-                </Button>
-              </div>
-            }>
-            <img
-                src="https://content.screencast.com/users/khari9987274/folders/Jing/media/d5b6f1ba-417d-4017-a74e-90b046f99181/00002025.png"
-            />
-          </Card>
-        </Col>
-      </Row>
-    </center> : null;
+    <div>
+      <center>
+        <Row>
+          <Col >
+            <Card
+              title="Click here to sign in"
+              reveal={
+                <div>
+                  <br /><br />
+                  <Button
+                    node="a"
+                    waves="light"
+                    large
+                    onClick={this.login}
+                  >
+                    Log In With Google
+                          <Icon left>
+                      cloud
+                          </Icon>
+                  </Button>
+                </div>
+              }>
+              <img
+                  src="https://content.screencast.com/users/khari9987274/folders/Jing/media/d5b6f1ba-417d-4017-a74e-90b046f99181/00002025.png"
+              />
+            </Card>
+          </Col>
+        </Row>
+      </center>
+    </div> : null;
 
 
     let logoutButton = this.state.user ?
@@ -103,7 +109,7 @@ class App extends React.Component {
     null
 
     return (
-      <div>
+      <div style={appStyle}>
         <div>
           <div>
             {userInfo}
