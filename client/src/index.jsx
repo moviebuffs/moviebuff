@@ -5,7 +5,7 @@ import axios from 'axios';
 // react router imports
 // import { Route, Switch } from 'react-router-dom';
 // import { BrowserRouter } from 'react-router-dom';
-
+import { Row, Col, Card, Button, Icon } from 'react-materialize';
 // import '../App.css';
 import Main from './Pages/Main.jsx';
 // import MovieDescript from './Pages/MovieDescript.jsx';
@@ -14,6 +14,7 @@ import Main from './Pages/Main.jsx';
 
 //firebase imports
 import firebase, { auth, provider } from '../../firebaseConfig.js';
+import { Divider } from '@material-ui/core';
 
 class App extends React.Component {
   constructor(props) {
@@ -59,9 +60,41 @@ class App extends React.Component {
   }
 
   render() {
-    let authButton = this.state.user ?
+    let loginCard = !this.state.user ? 
+    <center>
+      <Row>
+        <Col m={14} >
+          <Card
+            title="Click here to sign in"
+            reveal={
+              <div>
+                <br /><br />
+                <Button
+                  node="a"
+                  waves="light"
+                  large
+                  style={{ marginRight: '5px' }}
+                  onClick={this.login}
+                >
+                  Log In With Google
+                        <Icon left>
+                    cloud
+                        </Icon>
+                </Button>
+              </div>
+            }>
+            <img
+                src="https://content.screencast.com/users/khari9987274/folders/Jing/media/d5b6f1ba-417d-4017-a74e-90b046f99181/00002025.png"
+            />
+          </Card>
+        </Col>
+      </Row>
+    </center> : null;
+
+
+    let logoutButton = this.state.user ?
       <button onClick={this.logout}>Log Out</button> :   // when a user is logged in, show logout button and homepage
-      <button onClick={this.login}>Log In</button> // when a user is logged out, show login button
+      null
 
     let userInfo = this.state.user ? <h5>Welcome, {this.state.user.displayName}</h5> : null
 
@@ -72,11 +105,14 @@ class App extends React.Component {
     return (
       <div>
         <div>
-          {userInfo}
-          {authButton}
-        </div>
-        <div>
-          {homePage}
+          <div>
+            {userInfo}
+            {loginCard}
+            {logoutButton}
+          </div>
+          <div>
+            {homePage}
+          </div>
         </div>
       </div>
     );
