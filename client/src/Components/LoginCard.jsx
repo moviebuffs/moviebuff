@@ -1,8 +1,7 @@
 import React from 'react'
 import { Row, Col, Card, Button, Icon } from 'react-materialize';
 
-export default function LoginCard(props) {
-  return (
+const LoginCard = props => (
     <div>
       <center>
         <Row>
@@ -19,9 +18,9 @@ export default function LoginCard(props) {
                     onClick={props.loginClick}
                   >
                     Log In With Google
-                          <Icon left>
+                    <Icon left>
                       cloud
-                          </Icon>
+                    </Icon>
                   </Button>
                 </div>
               }>
@@ -33,5 +32,6 @@ export default function LoginCard(props) {
         </Row>
       </center>
     </div>
-  )
-}
+  );
+
+export default LoginCard;
