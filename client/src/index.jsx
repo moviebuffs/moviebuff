@@ -60,11 +60,12 @@ class App extends React.Component {
   }
 
   render() {
-    let loginCard = !this.state.user ? <center>
+    let loginCard = !this.state.user ? 
+    <center>
       <Row>
         <Col m={14} >
           <Card
-            title="Click here to get started"
+            title="Click here to sign in"
             reveal={
               <div>
                 <br />
@@ -83,7 +84,7 @@ class App extends React.Component {
               </div>
             }>
             <img
-              src="http://www.premierecinemas.net/images/GenericMovieTheater.jpg"
+                src="https://previews.dropbox.com/p/thumb/AAenBmA3eg2r-f4plfaokgvDQcF15lR9LXlqPkkJc0d8U9DdB7uckvnqO1luyDzqvU-uArj2QgoO47WVOMlJI70Z0tji30jYfiyKbYLBOikPv-KmjjRX3L5QtOUwzPpfjPN5WkQxFEhbC_unirk6sv3LpUtGwPUJIlpej9uCiBEAwwJzqC_9R52tTwgNozbkCNSohilq0g07lfX7rkB-HhosPhourXCca0IS4y-wFGnH_ge2vycGSHr8kUE7dQFq0Z6fshb6Aes3KQo72TqWqxboxP_2CHi4YyyNQD3fSnd4PHzOnF7h0lC9EeCiZ_j2Ih2cA8jDpXchfNmeEEEMNZWG/p.jpeg?fv_content=true&size_mode=5"
             />
           </Card>
         </Col>
