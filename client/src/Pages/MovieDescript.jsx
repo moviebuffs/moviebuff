@@ -26,9 +26,8 @@ class MovieDescript extends React.Component {
     };
 
     this.getReviews = this.getReviews.bind(this);
-    // this.getVotes = this.getVotes.bind(this);
-    // this.handleVote = this.handleVote.bind(this);
-    // this.addToList = this.addToList.bind(this);
+    this.handleVote = this.handleVote.bind(this);
+    this.addToList = this.addToList.bind(this);
     this.upvote = this.upvote.bind(this);
     this.downvote = this.downvote.bind(this);
   }
@@ -51,8 +50,8 @@ class MovieDescript extends React.Component {
     this.getReviews(this.props.movie)
       .then((reviews) => {
         this.setState({
-           reviews: reviews,
-           userVotes: this.props.userVotes,
+          reviews: reviews,
+          userVotes: this.props.userVotes,
         })
       })
       .catch((error) => {
@@ -62,7 +61,6 @@ class MovieDescript extends React.Component {
 
   handleVote(vote) {
     const { movie } = this.props;
-    console.log(movie);
     return axios.put('/votes', {
       title: movie.title,
       overview: movie.overview,
@@ -72,7 +70,6 @@ class MovieDescript extends React.Component {
       numFlag: vote,
     })
       .then((res) => {
-        console.log(res);
         this.setState({
           userVotes: res.data[0].userVotes,
         })
@@ -83,27 +80,30 @@ class MovieDescript extends React.Component {
   }
 
   upvote() {
-    console.log('upvote');
     this.handleVote(1);
   }
 
   downvote() {
-    console.log('downvote');
     this.handleVote(-1);
   }
 
-  // addToList() {
-  //   return axios.post('/watchlist', {
-  //     movie: this.props.movie,
-  //     user: this.props.user,
-  //   })
-  //     .then((vote) => {
-  //       return vote;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
+  addToList() {
+    const { movie } = this.props;
+    return axios.post('/movies', {
+      title: movie.title,
+      overview: movie.overview,
+      poster_path: movie.posterPath,
+      vote_count: movie.voteCount,
+      vote_average: movie.voteAvg,
+      email: this.props.user.email,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   // show detailed info about movie and reviews about movie
   render() {
@@ -123,7 +123,7 @@ class MovieDescript extends React.Component {
           <Button onClick={this.upvote} variant="contained" color="primary">Upvote</Button>
           <h5>{this.state.userVotes}</h5>
           <Button onClick={this.downvote} variant="contained" color="primary">Downvote</Button>
-          <Button variant="contained" color="primary">Add to Watchlist</Button>
+          <Button onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
         </div>
         <div>
           <ReviewList reviews={this.state.reviews} />
