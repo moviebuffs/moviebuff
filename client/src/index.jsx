@@ -104,39 +104,23 @@ class App extends React.Component {
       </center>
     </div> : null;
 
-    let navBar = this.state.user ? 
-    <div>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <IconButton edge="start" color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h5" color="inherit">
-            Welcome, {this.state.user.displayName}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div> : null;
 
-    let logoutButton = this.state.user ? <button onClick={this.logout}>Log Out</button> 
-                      : null   // when a user is logged in, show logout button and homepage
+    // let logoutButton = this.state.user ? <button onClick={logoutClick}>Log Out</button> 
+    //                   : null   // when a user is logged in, show logout button and homepage
       
-    let userInfo = this.state.user ? <h5>Welcome, {this.state.user.displayName}</h5> : null
 
-    let homePage = this.state.user ? 
-    <Main user={this.state.user} /> :
-    null
+    let homePage = this.state.user ? <Main user={this.state.user} logoutClick={this.logout}/> : null
 
     return (
       <div style={appStyle}>
         <div>
           <div>
-            {navBar}
             {loginCard}
-            {logoutButton}
           </div>
           <div>
             {homePage}
+            {/* {navBar} */}
+            {/* {logoutButton} */}
           </div>
         </div>
       </div>
