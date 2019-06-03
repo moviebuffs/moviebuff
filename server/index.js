@@ -166,8 +166,10 @@ app.get('/trailer/:title', (req, res) => {
   // helper func for axios req
   console.log(req);
   console.log(req.params);
-  const { title } = req.body;
-  getTrailer(title);
+  const { title } = req.params;
+  getTrailer(title)
+  .then((videoData) => res.send(videoData))
+  .catch((err) => console.error(err));
 })
 
 

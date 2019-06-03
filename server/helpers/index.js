@@ -130,7 +130,8 @@ const getTrailer = (movieName) => {
       videoEmbeddable: true,
     }
   }).then((videoData) => {
-    console.log(videoData);
+    console.log(videoData.data.items);
+    return videoData.data.items;
   }).catch((err) => {
     console.error(err);
   })
