@@ -3,9 +3,7 @@ import axios from 'axios';
 // import { Button, Card, Row, Col } from 'react-materialize';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -16,14 +14,6 @@ import Video from '../Components/Video.jsx';
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: purple,
-    secondary: {
-      main: '#f44336',
-    },
-  },
-});
 
 class MovieDescript extends React.Component {
   constructor(props) {
@@ -135,7 +125,7 @@ class MovieDescript extends React.Component {
     const { movie } = this.props;
 
     return (
-        <div>
+        <div style={cardStyle}>
           <Box style={appStyle} display="flex" flexDirection="column">
           <Card style={cardStyle} >
             <CardActionArea>
