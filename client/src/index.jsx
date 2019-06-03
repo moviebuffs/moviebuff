@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
 // react router imports
 // import { Route, Switch } from 'react-router-dom';
 // import { BrowserRouter } from 'react-router-dom';
@@ -65,6 +71,7 @@ class App extends React.Component {
       justifyContent: 'center', 
       alignItems: 'center', 
     }
+
     let loginCard = !this.state.user ? 
     <div>
       <center>
@@ -97,11 +104,23 @@ class App extends React.Component {
       </center>
     </div> : null;
 
+    let navBar = this.state.user ? 
+    <div>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton edge="start" color="inherit" aria-label="Menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h5" color="inherit">
+            Welcome, {this.state.user.displayName}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </div> : null;
 
-    let logoutButton = this.state.user ?
-      <button onClick={this.logout}>Log Out</button> :   // when a user is logged in, show logout button and homepage
-      null
-
+    let logoutButton = this.state.user ? <button onClick={this.logout}>Log Out</button> 
+                      : null   // when a user is logged in, show logout button and homepage
+      
     let userInfo = this.state.user ? <h5>Welcome, {this.state.user.displayName}</h5> : null
 
     let homePage = this.state.user ? 
@@ -112,7 +131,7 @@ class App extends React.Component {
       <div style={appStyle}>
         <div>
           <div>
-            {userInfo}
+            {navBar}
             {loginCard}
             {logoutButton}
           </div>
