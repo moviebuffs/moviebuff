@@ -68,7 +68,7 @@ class App extends React.Component {
             title="Click here to sign in"
             reveal={
               <div>
-                <br />
+                <br /><br />
                 <Button
                   node="a"
                   waves="light"
@@ -84,7 +84,7 @@ class App extends React.Component {
               </div>
             }>
             <img
-                src="https://previews.dropbox.com/p/thumb/AAenBmA3eg2r-f4plfaokgvDQcF15lR9LXlqPkkJc0d8U9DdB7uckvnqO1luyDzqvU-uArj2QgoO47WVOMlJI70Z0tji30jYfiyKbYLBOikPv-KmjjRX3L5QtOUwzPpfjPN5WkQxFEhbC_unirk6sv3LpUtGwPUJIlpej9uCiBEAwwJzqC_9R52tTwgNozbkCNSohilq0g07lfX7rkB-HhosPhourXCca0IS4y-wFGnH_ge2vycGSHr8kUE7dQFq0Z6fshb6Aes3KQo72TqWqxboxP_2CHi4YyyNQD3fSnd4PHzOnF7h0lC9EeCiZ_j2Ih2cA8jDpXchfNmeEEEMNZWG/p.jpeg?fv_content=true&size_mode=5"
+                src="https://content.screencast.com/users/khari9987274/folders/Jing/media/d5b6f1ba-417d-4017-a74e-90b046f99181/00002025.png"
             />
           </Card>
         </Col>
@@ -105,12 +105,14 @@ class App extends React.Component {
     return (
       <div>
         <div>
-          {userInfo}
-          {loginCard}
-          {logoutButton}
-        </div>
-        <div>
-          {homePage}
+          <div>
+            {userInfo}
+            {loginCard}
+            {logoutButton}
+          </div>
+          <div>
+            {homePage}
+          </div>
         </div>
       </div>
     );
