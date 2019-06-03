@@ -1,5 +1,7 @@
 import React from 'react';
 // import '../App.css';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 class Search extends React.Component {
   constructor(props) {
@@ -24,10 +26,12 @@ class Search extends React.Component {
   // search input field and button
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <Box m={2} display="flex" flexDirection="row">
+        <Box m={1}>
+          <Button onClick={this.handleSubmit} variant="contained" color="primary" type="submit" value="Search">Search</Button>
+        </Box>
         <input type="text" value={this.state.value} onChange={this.handleChange} />
-        <input type="submit" value="Search" />
-      </form>
+      </Box>
     );
   }
 }

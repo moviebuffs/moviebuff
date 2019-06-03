@@ -26,17 +26,16 @@ class Movie extends React.Component {
     return (
       <div>
         <Parallax onClick={this.handleSelect} options={ {responsiveThreshold: 3} } image={<img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />} />
-        <div className="section white">
+        <div className="section blue">
           <div className="row container">
             <h2 className="header" onClick={this.handleSelect}>
               {movie.title}
             </h2>
-            <p className="grey-text text-darken-3 lighten-3">
+            <p className="white-text text-darken-3 lighten-3">
               {movie.overview}
             </p>
           </div>
         </div>
-        <Parallax image={<img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />} />
       </div>
       // <div>
       //   <div>
