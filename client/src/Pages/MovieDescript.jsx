@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import { Button, Card, Row, Col } from 'react-materialize';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
 import Video from '../Components/Video.jsx';
@@ -27,7 +28,6 @@ class MovieDescript extends React.Component {
     };
 
     this.getReviews = this.getReviews.bind(this);
-    // this.getTrailer = this.getTrailer.bind(this);
     this.handleVote = this.handleVote.bind(this);
     this.addToList = this.addToList.bind(this);
     this.upvote = this.upvote.bind(this);
@@ -111,34 +111,31 @@ class MovieDescript extends React.Component {
 
   // show detailed info about movie and reviews about movie
   render() {
-    const { movie } = this.props;
-    let trailer;
-    if (this.state.trailer) {
-      trailer = <div>
-        <iframe width="853" height="480" src={`https://www.youtube.com/embed/${this.state.trailer.id.videoId}`} frameborder="0" allowfullscreen></iframe>
-      </div>
+    const appStyle = {
+      display: 'flex',
+      alignItems: 'center',
     }
+    const btnStyle = {
+      margin: '5px, 10px',
+    }
+    const { movie } = this.props;
+
     return (
-      <div>
-        {/* information about movie; buttons for upvote/downvote; button for add to list; tweets; theatre links */}
         <div>
-          <h3>{movie.title}</h3>
-          <h4>{movie.voteAvg}</h4>
-          <p>{movie.overview}</p>
-        </div>
-        <div>
-          <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
-        </div>
-        <div>
-          <Button onClick={this.upvote} variant="contained" color="primary">Upvote</Button>
-          <h5>{this.state.userVotes}</h5>
-          <Button onClick={this.downvote} variant="contained" color="primary">Downvote</Button>
-          <Button onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
-        </div>
-        <div>
-          <Video movie={movie} />
-          <ReviewList reviews={this.state.reviews} />
-        </div>
+          <Box style={appStyle} display="flex" flexDirection="column">
+            <h3>{movie.title}</h3>
+            <h4>{movie.voteAvg}</h4>
+            <p>{movie.overview}</p>
+            <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
+            <Box style={appStyle} display="flex" flexDirection="row">
+              <Button style={btnStyle} onClick={this.upvote} variant="contained" color="primary">Upvote</Button>
+              <h5>{this.state.userVotes}</h5>
+              <Button style={btnStyle} onClick={this.downvote} variant="contained" color="primary">Downvote</Button>
+              <Button style={btnStyle} onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
+            </Box>
+            <Video movie={movie} />
+            <ReviewList reviews={this.state.reviews} />
+          </Box>
       </div>
     );
   }
