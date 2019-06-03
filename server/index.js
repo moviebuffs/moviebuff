@@ -162,8 +162,6 @@ app.get('/movie/:movieName', (req, res) => { // route that points to a movie nam
 });
 
 
-
-
 // routes for pages --- may not be needed --- will address later
 
 app.get('/popular', (req, res) => { 

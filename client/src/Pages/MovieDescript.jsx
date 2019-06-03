@@ -57,6 +57,13 @@ class MovieDescript extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+    this.getTrailer()
+      .then((trailer) => {
+        this.setState({trailer: res});
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   handleVote(vote) {
@@ -105,6 +112,18 @@ class MovieDescript extends React.Component {
       });
   }
 
+  getTrailer() {
+    return axios.get('/trailer', {
+      title: this.props.movie.title,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   // show detailed info about movie and reviews about movie
   render() {
     const { movie } = this.props;
@@ -126,6 +145,7 @@ class MovieDescript extends React.Component {
           <Button onClick={this.addToList} variant="contained" color="primary">Add to Watchlist</Button>
         </div>
         <div>
+          <Video />
           <ReviewList reviews={this.state.reviews} />
         </div>
       </div>
