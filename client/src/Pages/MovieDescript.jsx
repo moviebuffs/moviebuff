@@ -1,7 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 // import { Button, Card, Row, Col } from 'react-materialize';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 // import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
@@ -114,18 +120,42 @@ class MovieDescript extends React.Component {
     const appStyle = {
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
     }
     const btnStyle = {
-      margin: '5px, 10px',
+      margin: '20px',
+    }
+    const cardStyle = {
+      margin: 'auto',
+      maxWidth: '800px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     }
     const { movie } = this.props;
 
     return (
         <div>
           <Box style={appStyle} display="flex" flexDirection="column">
-            <h3>{movie.title}</h3>
-            <h4>{movie.voteAvg}</h4>
-            <p>{movie.overview}</p>
+          <Card style={cardStyle} >
+            <CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {movie.title}
+                </Typography>
+                <br />
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {movie.overview}
+                </Typography>
+                <br />
+                <Typography gutterBottom variant="h5" component="h2">
+                  Average Rating: {movie.voteAvg}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+          <br />
+          <br />
             <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
             <Box style={appStyle} display="flex" flexDirection="row">
               <Button style={btnStyle} onClick={this.upvote} variant="contained" color="primary">Upvote</Button>

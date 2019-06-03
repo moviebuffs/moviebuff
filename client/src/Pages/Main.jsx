@@ -120,7 +120,7 @@ class Main extends React.Component {
 
   render() {
     return this.state.movie ? // show a movie's details when it is clicked
-        <div>
+        <div >
         <Navbar
           logoutClick={this.props.logoutClick}
           goHome={this.goHome}
@@ -133,7 +133,7 @@ class Main extends React.Component {
           </div>
         </div>
         :
-        <div>
+      <div >
           <Navbar 
             logoutClick={this.props.logoutClick}
             goHome={this.goHome}
