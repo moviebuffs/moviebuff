@@ -11,10 +11,6 @@ import Box from '@material-ui/core/Box';
 import ReviewList from '../Components/ReviewList.jsx';
 import Video from '../Components/Video.jsx';
 
-import { createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-
-
 class MovieDescript extends React.Component {
   constructor(props) {
     super(props);
@@ -115,15 +111,24 @@ class MovieDescript extends React.Component {
     const btnStyle = {
       margin: '20px',
     }
+
     const cardStyle = {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
     }
+
+    const containerStyle = {
+      margin: "20px",
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }
+
     const { movie } = this.props;
 
     return (
-        <div style={cardStyle}>
+        <div style={containerStyle}>
           <Box style={appStyle} display="flex" flexDirection="column">
           <Card style={cardStyle} >
             <CardActionArea>
