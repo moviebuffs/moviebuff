@@ -18,7 +18,8 @@ const { // pull all backend helper functions for server and database interaction
   findMovieId,
   storeUsersMovies,
   findUsersMovies,
-  findAllMovies 
+  findAllMovies,
+  getTrailer, 
 } = require('./helpers/index');
 
 app.use(express.static(path.join(__dirname, "../client/dist")));
@@ -160,6 +161,16 @@ app.get('/movie/:movieName', (req, res) => { // route that points to a movie nam
       res.sendStatus(500);
     })
 });
+
+app.get('/trailer/:title', (req, res) => {
+  // helper func for axios req
+  console.log(req);
+  console.log(req.params);
+  const { title } = req.params;
+  getTrailer(title)
+  .then((videoData) => res.send(videoData))
+  .catch((err) => console.error(err));
+})
 
 
 // routes for pages --- may not be needed --- will address later
