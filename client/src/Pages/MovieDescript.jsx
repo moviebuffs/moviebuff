@@ -1,16 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-// import { Button, Card, Row, Col } from 'react-materialize';
 
 import Media from 'react-media';
-import { spacing } from '@material-ui/system';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-// import '../../App.css';
 import ReviewList from '../Components/ReviewList.jsx';
 import Video from '../Components/Video.jsx';
 
@@ -57,6 +54,7 @@ class MovieDescript extends React.Component {
       });
   }
 
+  // handle updating votes in database
   handleVote(vote) {
     const { movie } = this.props;
     return axios.put('/votes', {
@@ -84,7 +82,8 @@ class MovieDescript extends React.Component {
   downvote() {
     this.handleVote(-1);
   }
-
+  
+  // handler for adding movie to user's watchlist in database
   addToList() {
     const { movie } = this.props;
     return axios.post('/movies', {
@@ -126,18 +125,12 @@ class MovieDescript extends React.Component {
       justifyContent: 'center',
     }
 
-    const containerStyle = {
-      margin: "20px",
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }
-
     const { movie } = this.props;
 
+    // if the screen size is less that 400 pixels, show a smaller post pic and buttons in a column
     return (
       <div>
-        <Media query="(max-width: 400px)">
+        <Media query="(max-width: 400px)"> 
           {matches =>
             matches ? (
               <div>

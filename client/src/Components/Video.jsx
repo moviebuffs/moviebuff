@@ -11,6 +11,7 @@ class Video extends React.Component {
     this.getTrailer = this.getTrailer.bind(this);
   }
 
+  // get the youtube movie trailer for clicked movie
   getTrailer() {
     console.log(this.props.movie.title);
     return axios.get(`/trailer/${this.props.movie.title}`, {
@@ -25,6 +26,7 @@ class Video extends React.Component {
       });
   }
 
+  
   componentDidMount(e) {
     this.getTrailer()
       .then((trailer) => {
@@ -37,7 +39,7 @@ class Video extends React.Component {
       });
   }
 
-  // search input field and button
+  // youtube trailer video
   render() {
     if (this.state.trailer) {
       return (

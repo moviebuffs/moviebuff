@@ -1,5 +1,4 @@
 import React from 'react';
-// import '../App.css';
 import Movie from './Movie.jsx';
 
 class MovieList extends React.Component {
