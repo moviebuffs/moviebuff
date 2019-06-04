@@ -1,11 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-const _ = require('lodash');
-import { sizing } from '@material-ui/system';
 import Box from '@material-ui/core/Box';
-
-import { createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
+const _ = require('lodash');
 
 import Navbar from '../Components/Navbar.jsx'
 import Search from '../Components/Search.jsx';
@@ -33,7 +29,7 @@ class Main extends React.Component {
   getNowPlayingMovies() {
     return axios.get('/now-playing')
       .then((movies) => {
-        return _.shuffle(movies.data.data);
+        return _.shuffle(movies.data.data); // shuffle the movies we get back
       })
       .catch((error) => {
         console.error(error);
@@ -79,6 +75,7 @@ class Main extends React.Component {
     event.preventDefault();
   }
 
+  // show now playing movies when home button is clicked
   goHome() {
     this.getNowPlayingMovies()
       .then((response) => {
@@ -89,6 +86,7 @@ class Main extends React.Component {
       })
   }
 
+  // show movies on user's watchlist
   viewWatchlist() {
     axios.post('/usersMovies', {email: this.props.user.email})
       .then((res) => {
@@ -136,7 +134,7 @@ class Main extends React.Component {
             </Box>
           </div>
         </div>
-        :
+        : // else, show the list of movies set to movies state
       <div >
           <Navbar 
             logoutClick={this.props.logoutClick}

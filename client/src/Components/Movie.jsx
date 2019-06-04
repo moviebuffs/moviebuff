@@ -38,19 +38,6 @@ class Movie extends React.Component {
           </div>
         </div>
       </div>
-      // <div>
-      //   <div>
-      //     <h3 onClick={this.props.handleClick} >{movie.title}</h3>
-      //     <p>{movie.overview}</p>
-      //   </div>
-      //   <div>
-      //     <a href="#" onClick={this.handleSelect}>
-      //       <img src={`https://image.tmdb.org/t/p/w500/${movie.posterPath}`} alt="" />
-      //     </a>
-      //     <h4>{movie.voteAvg}</h4>
-      //   </div>
-      //   {/* information about movie from api data */}
-      // </div>
     );
   }
 }

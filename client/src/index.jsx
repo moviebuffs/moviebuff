@@ -1,16 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
-// react router imports
-// import { Route, Switch } from 'react-router-dom';
-// import { BrowserRouter } from 'react-router-dom';
-// import '../App.css';
 import LoginCard from './Components/LoginCard.jsx'
 import Main from './Pages/Main.jsx';
-// import MovieDescript from './Pages/MovieDescript.jsx';
-// import UserAccount from './Pages/UserAccount.jsx';
-// import SearchResults from './Pages/SearchResults.jsx';
 
 //firebase imports
 import firebase, { auth, provider } from '../../firebaseConfig.js';
@@ -78,16 +70,5 @@ class App extends React.Component {
     );
   }
 }
-
-// const App = () => (
-//   <div>
-//     <Switch>
-//       <Route exact path='/' component={Main} />
-//       <Route path='/movie' component={MovieDescript} />
-//       <Route path='/account' component={UserAccount} />
-//       <Route path='/results' component={SearchResults} />
-//     </Switch>
-//   </div>
-// )
 
 ReactDOM.render(<App />, document.getElementById('app'));
